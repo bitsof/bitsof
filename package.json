@@ -1,0 +1,11 @@
+{
+  "name": "bitsof",
+  "version": "1.0.0",
+  "description": "bitsof: AI Exploration & Business Solutions website.",
+  "scripts": {
+    "dev": "bun --hot server.js"
+  },
+  "keywords": ["markdown", "bun", "static", "javascript"],
+  "author": "",
+  "license": "ISC"
+} 
