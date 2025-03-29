@@ -1,0 +1,11 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+When writing drafts, please refer to ensure you write drafts properly: [drafting_process.md](mdc:ai-knowledge/drafting_process.md)
+When writing posts, please follow the rules outlined in: [writing_guide.md](mdc:ai-knowledge/writing_guide.md)
+For general application info, please follow: [project_structure.md](mdc:ai-knowledge/project_structure.md)
+
+
+Please keep whiteboard memory in @whiteboard.md, modify and change it as necessary as information becomes out of date.
