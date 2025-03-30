@@ -33,23 +33,23 @@
                 const path = window.location.pathname;
                 
                 if (path === '/' || path === '/index.html') {
-                    htmx.ajax('GET', '/get-home-content', { 
+                    htmx.ajax('GET', '/api/get-home-content', { 
                         target: '#main-content',
                         pushUrl: '/'
                     });
                 } else if (path === '/about') {
-                    htmx.ajax('GET', '/get-about-content', { 
+                    htmx.ajax('GET', '/api/get-about-content', { 
                         target: '#main-content',
                         pushUrl: '/about'
                     });
                 } else if (path === '/blog') {
-                    htmx.ajax('GET', '/get-blog-list', { 
+                    htmx.ajax('GET', '/api/get-blog-list', { 
                         target: '#main-content',
                         pushUrl: '/blog'
                     });
                 } else if (path.startsWith('/blog/')) {
                     const slug = path.split('/').pop();
-                    htmx.ajax('GET', `/get-post/${slug}`, { 
+                    htmx.ajax('GET', `/api/get-post/${slug}`, { 
                         target: '#main-content',
                         pushUrl: path
                     });

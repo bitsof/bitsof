@@ -27,7 +27,7 @@
     <script>
         // Load about content on initial page load
         document.addEventListener('DOMContentLoaded', function() {
-            htmx.ajax('GET', '/get-about-content', { 
+            htmx.ajax('GET', '/api/get-about-content', { 
                 target: '#main-content',
                 pushUrl: '/about'
             });

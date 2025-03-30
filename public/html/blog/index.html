@@ -27,7 +27,7 @@
     <script>
         // Load blog list on initial page load
         document.addEventListener('DOMContentLoaded', function() {
-            htmx.ajax('GET', '/get-blog-list', { 
+            htmx.ajax('GET', '/api/get-blog-list', { 
                 target: '#main-content',
                 pushUrl: '/blog'
             });
