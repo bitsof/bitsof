@@ -11,28 +11,7 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/" 
-                       hx-get="/get-home-content" 
-                       hx-target="#main-content" 
-                       hx-push-url="/">Home</a>
-                </li>
-                <li>
-                    <a href="/blog" 
-                       hx-get="/get-blog-list" 
-                       hx-target="#main-content" 
-                       hx-push-url="/blog">Blog</a>
-                </li>
-                <li>
-                    <a href="/about" 
-                       hx-get="/get-about-content" 
-                       hx-target="#main-content" 
-                       hx-push-url="/about">About</a>
-                </li>
-            </ul>
-        </nav>
+        <div hx-get="/html/fragments/navigation.html" hx-trigger="load" hx-swap="innerHTML"></div>
     </header>
     
     <main>

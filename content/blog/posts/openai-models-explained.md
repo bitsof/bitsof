@@ -1,6 +1,9 @@
-# Understanding OpenAI's Current Model Landscape
-
-**(Published: June 27, 2024)**
+---
+title: "Understanding OpenAI's Current Model Landscape"
+date: 2024-06-27
+description: "A comprehensive overview of OpenAI's current model offerings, including GPT-4, GPT-3.5 Turbo, DALL·E 3, Whisper, and embedding models."
+tags: ["AI", "OpenAI", "GPT-4", "Machine Learning", "Technical"]
+---
 
 OpenAI is a leading research and deployment company driving the AI revolution. They offer a range of powerful models accessible via API, each with different strengths and use cases. Understanding these models is key for businesses looking to leverage AI.
 

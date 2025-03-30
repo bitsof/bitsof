@@ -1,4 +1,9 @@
-# AI in Sales: Why Your Team Needs a Smart Assistant, Not a Replacement
+---
+title: "AI in Sales: Why Your Team Needs a Smart Assistant, Not a Replacement"
+date: 2024-03-20
+description: "Explore how AI can empower sales teams through smart automation while maintaining the human touch in customer relationships."
+tags: ["AI", "Sales", "Automation", "Business"]
+---
 
 ## Introduction: Beyond the AI Hype
 

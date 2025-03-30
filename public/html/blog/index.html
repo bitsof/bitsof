@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - BitsOf</title>
+    <meta name="description" content="Read the latest insights about AI and business automation from BitsOf.">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Include HTMX library -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+    <header>
+        <div hx-get="/html/fragments/navigation.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    </header>
+    
+    <main>
+        <div id="main-content">
+            <!-- Blog listing will be loaded here -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BitsOf LLC. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load blog list on initial page load
+        document.addEventListener('DOMContentLoaded', function() {
+            htmx.ajax('GET', '/get-blog-list', { 
+                target: '#main-content',
+                pushUrl: '/blog'
+            });
+        });
+    </script>
+</body>
+</html> 
