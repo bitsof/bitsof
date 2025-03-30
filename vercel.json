@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "buildCommand": "bun install",
+  "devCommand": "bun run server.js",
+  "outputDirectory": "public",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js"
+    },
+    {
+      "src": "/get-home-content",
+      "dest": "/api/get-home-content.js"
+    },
+    {
+      "src": "/get-about-content",
+      "dest": "/api/get-about-content.js"
+    },
+    {
+      "src": "/get-blog-list",
+      "dest": "/api/get-blog-list.js"
+    },
+    {
+      "src": "/get-post/(.*)",
+      "dest": "/api/get-post/[slug].js?slug=$1"
+    },
+    {
+      "src": "/html/fragments/(.*)",
+      "dest": "/api/html/fragments/$1.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+} 

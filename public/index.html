@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <div hx-get="/html/fragments/navigation.html" hx-trigger="load" hx-swap="innerHTML"></div>
+        <div hx-get="/api/html/fragments/navigation" hx-trigger="load" hx-swap="innerHTML"></div>
     </header>
     
     <main>
@@ -27,7 +27,7 @@
     <script>
         // Load home content on initial page load
         document.addEventListener('DOMContentLoaded', function() {
-            htmx.ajax('GET', '/get-home-content', { 
+            htmx.ajax('GET', '/api/get-home-content', { 
                 target: '#main-content',
                 pushUrl: '/'
             });

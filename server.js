@@ -31,6 +31,113 @@ async function getBlogPosts() {
     }
 }
 
+// Handle API routes for Vercel compatibility
+async function handleApiRoutes(pathname) {
+    // Handle navigation fragment API request
+    if (pathname === '/api/html/fragments/navigation') {
+        try {
+            const content = await readFile('public/html/fragments/navigation.html', 'utf-8');
+            return new Response(content, { 
+                headers: { 'Content-Type': 'text/html' }
+            });
+        } catch (error) {
+            console.error(`Error loading navigation: ${error}`);
+            return new Response("Error loading navigation", { status: 500 });
+        }
+    }
+    
+    // Handle home content API request
+    if (pathname === '/api/get-home-content') {
+        try {
+            const content = await readFile('public/html/fragments/home.html', 'utf-8');
+            return new Response(content, { 
+                headers: { 'Content-Type': 'text/html' }
+            });
+        } catch (error) {
+            console.error(`Error loading home content: ${error}`);
+            return new Response("Error loading home content", { status: 500 });
+        }
+    }
+    
+    // Handle about content API request
+    if (pathname === '/api/get-about-content') {
+        try {
+            const content = await readFile('public/html/fragments/about.html', 'utf-8');
+            return new Response(content, { 
+                headers: { 'Content-Type': 'text/html' }
+            });
+        } catch (error) {
+            console.error(`Error loading about content: ${error}`);
+            return new Response("Error loading about content", { status: 500 });
+        }
+    }
+    
+    // Handle blog list API request
+    if (pathname === '/api/get-blog-list') {
+        try {
+            const posts = await getBlogPosts();
+            
+            // Generate HTML for blog post list
+            let html = '<h1>Blog Posts</h1><div class="blog-posts">';
+            
+            posts.forEach(post => {
+                const tagsHtml = post.tags ? 
+                    `<span class="post-tags">Tags: ${post.tags}</span>` : '';
+                
+                html += `
+                    <article class="blog-post">
+                        <h3>
+                            <a href="/blog/${post.slug}" 
+                               hx-get="/api/get-post/${post.slug}" 
+                               hx-target="#main-content" 
+                               hx-push-url="/blog/${post.slug}">${post.title}</a>
+                        </h3>
+                        <div class="post-meta">
+                            <span class="post-date">Posted on: ${post.date}</span>
+                            ${tagsHtml}
+                        </div>
+                        <p class="post-excerpt">${post.excerpt || ''}</p>
+                    </article>
+                `;
+            });
+            
+            html += '</div>';
+            
+            return new Response(html, { 
+                headers: { 'Content-Type': 'text/html' }
+            });
+        } catch (error) {
+            console.error(`Error loading blog posts: ${error}`);
+            return new Response("Error loading blog posts", { status: 500 });
+        }
+    }
+    
+    // Handle blog post API request
+    if (pathname.startsWith('/api/get-post/')) {
+        try {
+            const slug = pathname.split('/').pop();
+            const postPath = `public/html/fragments/blog/${slug}.html`;
+            
+            // Check if file exists
+            if (!fs.existsSync(postPath)) {
+                return new Response("Blog post not found", { status: 404 });
+            }
+            
+            const content = await readFile(postPath, 'utf-8');
+            
+            return new Response(content, { 
+                headers: { 'Content-Type': 'text/html' }
+            });
+        } catch (error) {
+            console.error(`Error loading blog post: ${error}`);
+            return new Response("Error loading blog post", { status: 404 });
+        }
+    }
+    
+    // Return null if no API handler matches
+    return null;
+}
+
 serve({
     port: 3000,
     async fetch(req) {
@@ -41,6 +148,7 @@ serve({
         // Skip security check for root path or standard routes
         if (pathname !== '/' && 
             !pathname.startsWith('/get-') && 
+            !pathname.startsWith('/api/') && 
             !pathname.startsWith('/css/') && 
             !pathname.startsWith('/js/') && 
             !pathname.startsWith('/images/') && 
@@ -55,7 +163,15 @@ serve({
             }
         }
 
-        // HTMX fragment endpoints
+        // Try the new API routes first (Vercel compatibility)
+        if (pathname.startsWith('/api/')) {
+            const apiResponse = await handleApiRoutes(pathname);
+            if (apiResponse) {
+                return apiResponse;
+            }
+        }
+
+        // HTMX fragment endpoints (original functionality as fallback)
         if (pathname === '/get-home-content') {
             try {
                 const content = await readFile('public/html/fragments/home.html', 'utf-8');
