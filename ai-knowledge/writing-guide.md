@@ -1,6 +1,6 @@
 # AI-Assisted Writing Guide for BitsOf Blog Articles
 
-**Objective:** Instruct AI collaborators on the mandatory **iterative process** for creating BitsOf blog articles, ensuring correctness, clarity, conciseness, quality, and value. (File naming conventions are in `drafting-process.md`).
+**Objective:** Instruct AI collaborators on the mandatory **iterative process** for creating BitsOf blog articles, ensuring correctness, clarity, conciseness, quality, and value.
 
 **Core Principles (AI Must Adhere To):**
 
@@ -13,7 +13,7 @@
 **Guiding AI Collaboration (General):**
 *   **Be Specific:** Clearly state the goal of each request (e.g., "Refine tone," "Improve conciseness").
 *   **Reference Files:** Always specify exact input file path(s) and version(s).
-*   **Define Output:** Clearly state the desired output file path using conventions (hyphenated names) from `drafting-process.md`.
+*   **Define Output:** Clearly state the desired output file path using conventions from `drafting-process.md`.
 *   **Provide Context:** Briefly state the current Phase/Task.
 *   **Tone Feedback:** When giving feedback on tone/voice, provide 1-2 specific examples of phrases to change or suggest preferred alternatives (consider logging examples in `whiteboard.md`).
 *   **Specific Constraints:** Unique requirements (e.g., including specific data points, a meta-reference) can be requested during planning or refinement if instructions are clear.
@@ -39,6 +39,12 @@
   - Testing or temporary content
 - All images and references should be production-ready
 - Content should follow established style guidelines
+
+**Project File Structure:**
+- Draft content is stored in: `/content/blog/drafts/{topic-name}/`
+- Final markdown is stored in: `/content/blog/posts/{topic-name}.md`
+- HTML fragments are generated to: `/public/html/fragments/blog/{slug}.html`
+- Blog metadata is stored in: `/public/data/blog-posts.json`
 
 **Mandatory AI-Collaborative Writing Process:**
 
@@ -97,4 +103,15 @@
     2.  Perform final human read-through and quality review.
     3.  **(Optional but Recommended):** Generate a `final-assessment.md` summarizing the process, learnings, and suggestions for future improvement.
     4.  Approve final content.
-*   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the approved polished draft). 
+*   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the approved polished draft).
+
+**Phase 5: Publication Process**
+*   **Goal:** Convert final markdown to HTML fragment and update metadata for the website.
+*   **Input:** `final.md` from drafts folder
+*   **Collaborative Actions:**
+    1. Move the final markdown to `/content/blog/posts/{topic-name}.md`
+    2. Convert markdown to HTML format following the template in `drafting-process.md`
+    3. Save the HTML fragment to `/public/html/fragments/blog/{slug}.html`
+    4. Add an entry to `/public/data/blog-posts.json` with all required metadata
+    5. Test the published post through the website to ensure proper rendering and navigation
+*   **Output:** Published blog post accessible via the website at `/blog/{slug}` 

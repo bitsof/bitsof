@@ -3,8 +3,8 @@
 ## Overview
 
 *   **Project Name:** BitsOf
-*   **Purpose:** Static website for BitsOf (AI education/consulting), built with Bun & client-side Markdown rendering. Features a blog with AI-assisted writing workflow.
-*   **Core Technology:** Bun server, Vanilla JS, Showdown.js (via CDN), Markdown.
+*   **Purpose:** Website for BitsOf (AI education/consulting), built with Bun & HTMX. Features a blog with AI-assisted writing workflow.
+*   **Core Technology:** Bun server, HTMX for dynamic content loading, static HTML fragments.
 
 ## Team Expertise (Highlights)
 
@@ -12,30 +12,39 @@ Focuses on: Generative AI, Agentic LLMs, Tool Calling, Zapier/N8N automation.
 
 ## Content Structure & URL Mapping
 
-*   Published content lives in `/content/`.
-*   `/content/index.md` -> `/`
-*   `/content/about.md` -> `/about`
-*   `/content/blog/index.md` -> `/blog`
-*   `/content/blog/post-name.md` -> `/blog/post-name`
+*   Published blog posts live in `/content/blog/posts/` as markdown files
+*   Draft posts are stored in `/content/blog/drafts/`
+*   Final HTML fragments for blog posts are in `/public/html/fragments/blog/`
+*   Blog metadata is stored in `/public/data/blog-posts.json`
+*   URL structure:
+    *   `/` -> Home page
+    *   `/about` -> About page
+    *   `/blog` -> Blog listing page
+    *   `/blog/{slug}` -> Individual blog post page
 
-## Client-Side Logic (`script.js`)
+## Client-Side Logic
 
-*   Handles single-page application (SPA) navigation using `history.pushState`.
-*   Fetches corresponding Markdown from `/content/` based on URL path.
-*   Implements fallback: If `/content/path.md` fails, tries `/content/path/index.md`.
-*   Renders fetched Markdown to HTML (using Showdown.js) in the `#content` element.
-*   Displays a "Not Found" message if content fetching fails.
+*   Uses HTMX for dynamic content loading without full page refreshes
+*   Content is loaded via HTMX endpoints that return HTML fragments
+*   Blog post URLs use the slug from metadata rather than the filename
 
 ## Server Logic (`server.js`)
 
 *   Uses `Bun.serve` (run via `bun dev`).
 *   Serves static assets (`.html`, `.css`, `.js`, images).
-*   Serves requested `.md` files from `/content/` (for client-side fetching).
-*   For path-based routes without extensions (e.g., `/about`, `/blog`) that don't match a file, serves `index.html` to enable client-side SPA routing.
-*   Returns 404 for unresolved requests.
+*   Provides HTMX endpoints that return HTML fragments:
+    *   `/get-home-content` - Home page content
+    *   `/get-about-content` - About page content
+    *   `/get-blog-list` - List of all blog posts
+    *   `/get-post/{slug}` - Content for a specific blog post
+*   Blog posts are served from pre-generated HTML fragments in `/public/html/fragments/blog/`
+*   Blog metadata is loaded from `/public/data/blog-posts.json`
 
-## Blog Drafting Workflow
+## Blog Publishing Workflow
 
-*   **Location:** In-progress posts are in `/drafts/` (see `drafting-process.md`).
+*   **Draft Location:** In-progress posts are in `/content/blog/drafts/` (see `drafting-process.md`).
+*   **Final Markdown:** Completed posts go to `/content/blog/posts/` (example: `openai-models-explained.md`)
+*   **HTML Conversion:** Final markdown is converted to HTML fragments in `/public/html/fragments/blog/` (example: `openai-models-explained.html`)
+*   **Metadata:** Blog post metadata must be added to `/public/data/blog-posts.json`
 *   **Process:** Follows mandatory steps detailed in **`ai-knowledge/drafting-process.md`**.
 *   **Standards:** Adheres to principles in **`ai-knowledge/writing-guide.md`**. 

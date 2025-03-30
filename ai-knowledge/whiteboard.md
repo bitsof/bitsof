@@ -24,6 +24,13 @@
 
 ============ WRITE MEMORY BELOW HERE ================
 
+- [2024-03-30T00:00:00Z] Description: Blog Post Workflow Update. Payload:
+    * Draft posts are stored in `/content/blog/drafts/{topic-name}/`
+    * Final markdown goes to `/content/blog/posts/{topic-name}.md`
+    * HTML fragments are generated at `/public/html/fragments/blog/{slug}.html`
+    * Metadata must be added to `/public/data/blog-posts.json`
+    * Server endpoints include `/get-post/{slug}` for HTMX content loading
+
 - [Timestamp Placeholder] Description: How to Write an Amazing Hook. Payload:
     *   **Know Your Audience:** Who are you trying to reach? What are their pain points, desires, or questions?
     *   **Promise Value:** What will the reader gain? Hint at the core benefit or solution.
