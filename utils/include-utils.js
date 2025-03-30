@@ -1,3 +1,4 @@
+// Static HTML include processing utilities
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -16,14 +17,14 @@ async function fileExists(filepath) {
 }
 
 /**
- * Process SSI directives in HTML content
- * @param {string} content - HTML content with SSI directives
+ * Process HTML include directives in content
+ * @param {string} content - HTML content with include directives
  * @param {string} root - Root directory path
  * @param {string} host - Host for API requests
  * @param {string} proto - Protocol for API requests
  * @returns {Promise<string>} Processed HTML content
  */
-async function processSsiDirectives(content, root, host, proto) {
+async function processIncludeDirectives(content, root, host, proto) {
   const regexp = /<!--#include(.+?)-->/g;
   let result = '';
   let lastIndex = 0;
@@ -49,19 +50,19 @@ async function processSsiDirectives(content, root, host, proto) {
           // Check if included file exists
           const exists = await fileExists(includePath);
           if (!exists) {
-            console.error(`SSI include file not found: ${includePath}`);
+            console.error(`Include file not found: ${includePath}`);
             result += `<!-- Error: Included file not found: ${value} -->`;
             continue;
           }
           
-          console.log(`Processing SSI include: ${value}`);
+          console.log(`Processing include: ${value}`);
           
           // Using Bun's optimized file reading
           const bunFile = Bun.file(includePath);
           includeContent = await bunFile.text();
           
           // Recursively process includes in the included file
-          const processedInclude = await processSsiDirectives(includeContent, root, host, proto);
+          const processedInclude = await processIncludeDirectives(includeContent, root, host, proto);
           result += processedInclude;
         } else if (type === 'virtual') {
           console.log(`Processing virtual include: ${value}`);
@@ -90,7 +91,7 @@ async function processSsiDirectives(content, root, host, proto) {
       }
     } else {
       const directive = match[0];
-      const errorMsg = `Invalid SSI directive format: ${directive}`;
+      const errorMsg = `Invalid include directive format: ${directive}`;
       console.error(errorMsg);
       result += `<!-- ${errorMsg} -->`;
     }
@@ -102,5 +103,5 @@ async function processSsiDirectives(content, root, host, proto) {
 }
 
 module.exports = {
-  processSsiDirectives
+  processIncludeDirectives
 }; 

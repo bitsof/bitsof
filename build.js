@@ -1,12 +1,12 @@
-// Build script for processing SSI directives at build time
+// Build script for processing HTML includes at build time
 const fs = require('fs/promises');
 const path = require('path');
-const { processSsiDirectives } = require('./utils/ssi-utils');
+const { processIncludeDirectives } = require('./utils/include-utils');
 
 // Configuration
 const sourceDir = path.join(process.cwd(), 'public');
 const outputDir = path.join(process.cwd(), 'dist');
-const host = process.env.VERCEL_URL || 'yourdomain.com'; // This will be used for API calls in SSI
+const host = process.env.VERCEL_URL || 'yourdomain.com'; // This will be used for API calls in includes
 const proto = 'https';
 
 // Pages to process (relative to public directory)
@@ -99,7 +99,7 @@ async function copyAssetDir(src, dest) {
   }
 }
 
-// Process an HTML file with SSI directives
+// Process an HTML file with include directives
 async function processHtmlFile(filename) {
   try {
     const src = path.join(sourceDir, filename);
@@ -113,8 +113,8 @@ async function processHtmlFile(filename) {
     // Read the file
     const content = await fs.readFile(src, 'utf8');
     
-    // Process SSI directives
-    const processed = await processSsiDirectives(content, process.cwd(), host, proto);
+    // Process include directives
+    const processed = await processIncludeDirectives(content, process.cwd(), host, proto);
     
     // Write the processed file
     await fs.writeFile(dest, processed, 'utf8');
@@ -182,8 +182,8 @@ async function generateBlogPosts() {
           .replace('{{DESCRIPTION}}', description)
           .replace('{{CONTENT}}', postContent);
         
-        // Process SSI directives in the generated file
-        const processed = await processSsiDirectives(postHtml, process.cwd(), host, proto);
+        // Process include directives in the generated file
+        const processed = await processIncludeDirectives(postHtml, process.cwd(), host, proto);
         
         // Write the file
         await fs.writeFile(outputPath, processed, 'utf8');

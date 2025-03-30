@@ -4,7 +4,7 @@
   "description": "bitsof: AI Exploration & Business Solutions website.",
   "scripts": {
     "dev": "bun --hot server.js",
-    "build": "bun build.js"
+    "build": "bun ./build.js"
   },
   "dependencies": {},
   "keywords": ["markdown", "bun", "static", "javascript"],

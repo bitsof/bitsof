@@ -1,7 +1,7 @@
-// Bun SSI development server
+// Bun HTML includes development server
 const path = require('path');
 const fs = require('fs').promises;
-const { processSsiDirectives } = require('./utils/ssi-utils');
+const { processIncludeDirectives } = require('./utils/include-utils');
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
@@ -34,9 +34,9 @@ async function fileExists(filePath) {
   }
 }
 
-// Process and serve HTML files with SSI
-async function serveWithSsi(req, filepath) {
-  console.log(`Serving with SSI: ${filepath}`);
+// Process and serve HTML files with includes
+async function serveWithIncludes(req, filepath) {
+  console.log(`Serving with includes: ${filepath}`);
   
   const exists = await fileExists(filepath);
   if (!exists) throw new Error(`File not found: ${filepath}`);
@@ -44,7 +44,7 @@ async function serveWithSsi(req, filepath) {
   const fileContent = await Bun.file(filepath).text();
   const host = req.headers.get('host') || `localhost:${PORT}`;
   const proto = req.headers.get('x-forwarded-proto') || 'http';
-  const processed = await processSsiDirectives(fileContent, process.cwd(), host, proto);
+  const processed = await processIncludeDirectives(fileContent, process.cwd(), host, proto);
   
   return new Response(processed, {
     headers: { 'Content-Type': 'text/html' }
@@ -65,7 +65,7 @@ async function serve404(req) {
   const notFoundPath = path.join(PUBLIC_DIR, '404.html');
   
   if (await fileExists(notFoundPath)) {
-    return await serveWithSsi(req, notFoundPath);
+    return await serveWithIncludes(req, notFoundPath);
   }
   
   return new Response('<h1>404 - Page Not Found</h1>', {
@@ -82,7 +82,7 @@ async function handleRequest(req) {
   try {
     // Handle root request
     if (pathname === '/' || pathname === '/index.html') {
-      return await serveWithSsi(req, path.join(PUBLIC_DIR, 'index.html'));
+      return await serveWithIncludes(req, path.join(PUBLIC_DIR, 'index.html'));
     }
     
     // Handle blog post URLs in dist directory
@@ -93,21 +93,21 @@ async function handleRequest(req) {
       }
     }
     
-    // Try to serve as HTML page with SSI
+    // Try to serve as HTML page with includes
     let pagePath = path.join(PUBLIC_DIR, pathname);
     
     // Try with .html extension if needed
     if (!pathname.endsWith('.html')) {
       const pathWithExt = path.join(PUBLIC_DIR, pathname + '.html');
       if (await fileExists(pathWithExt)) {
-        return await serveWithSsi(req, pathWithExt);
+        return await serveWithIncludes(req, pathWithExt);
       }
     }
     
-    // Serve HTML with SSI or static file
+    // Serve HTML with includes or static file
     if (await fileExists(pagePath)) {
       if (pathname.endsWith('.html')) {
-        return await serveWithSsi(req, pagePath);
+        return await serveWithIncludes(req, pagePath);
       }
       return await serveStaticFile(pagePath);
     }
@@ -129,5 +129,5 @@ const server = Bun.serve({
   fetch: handleRequest
 });
 
-console.log(`SSI development server running at http://localhost:${PORT}`);
+console.log(`HTML includes development server running at http://localhost:${PORT}`);
 console.log(`Serving files from: ${PUBLIC_DIR}`); 
