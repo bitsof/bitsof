@@ -2,13 +2,20 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = (req, res) => {
-  const filePath = path.join(process.cwd(), 'public/html/fragments/blog/index.html');
-  
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
+    const filePath = path.join(process.cwd(), 'public/html/fragments/blog/index.html');
+    
+    if (fs.existsSync(filePath)) {
+      const content = fs.readFileSync(filePath, 'utf8');
+      res.setHeader('Content-Type', 'text/html');
+      return res.status(200).send(content);
+    }
+    
     res.setHeader('Content-Type', 'text/html');
-    res.status(200).send(content);
+    res.status(200).send('<h1>Blog Posts</h1><p>No posts available.</p>');
   } catch (error) {
-    res.status(500).send(`Error loading fragment: ${error.message}`);
+    console.error(`Error: ${error.message}`);
+    res.setHeader('Content-Type', 'text/html');
+    res.status(200).send('<h1>Blog Posts</h1><p>Error loading posts.</p>');
   }
 }; 
