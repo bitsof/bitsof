@@ -1,10 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "dist/**/*", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/dist/$1" }
-  ],
-  "buildCommand": "bun build.js"
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "public": true,
+  "outputDirectory": "dist"
 } 
