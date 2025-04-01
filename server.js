@@ -1,11 +1,15 @@
-// server.js
-import { serve } from "bun";
-import path from "path";
-import { readdir, readFile } from "fs/promises";
-import fs from "fs";
+// Bun HTML includes development server
+const path = require('path');
+const fs = require('fs').promises;
+const { processIncludeDirectives } = require('./utils/include-utils');
+
+const PORT = process.env.PORT || 3000;
+const PUBLIC_DIR = path.join(process.cwd(), 'public');
+const DIST_DIR = path.join(process.cwd(), 'dist');
 
 // Content type map for static files
-const CONTENT_TYPES = {
+function getContentType(ext) {
+  const contentTypes = {
     '.html': 'text/html',
     '.css': 'text/css',
     '.js': 'application/javascript',
@@ -15,338 +19,115 @@ const CONTENT_TYPES = {
     '.jpeg': 'image/jpeg',
     '.gif': 'image/gif',
     '.svg': 'image/svg+xml',
-    '.ico': 'image/x-icon'
-};
-
-// Get blog posts metadata from the public directory
-async function getBlogPosts() {
-    try {
-        // Read the JSON file that will contain blog metadata
-        const data = await readFile('public/data/blog-posts.json', 'utf-8');
-        const posts = JSON.parse(data);
-        return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } catch (error) {
-        console.error(`Error loading blog posts metadata: ${error}`);
-        return [];
-    }
+    '.ico': 'image/x-icon',
+  };
+  return contentTypes[ext] || 'text/plain';
 }
 
-// Handle API routes for Vercel compatibility
-async function handleApiRoutes(pathname) {
-    // Handle navigation fragment API request
-    if (pathname === '/api/html/fragments/navigation') {
-        try {
-            const content = await readFile('public/html/fragments/navigation.html', 'utf-8');
-            return new Response(content, { 
-                headers: { 'Content-Type': 'text/html' }
-            });
-        } catch (error) {
-            console.error(`Error loading navigation: ${error}`);
-            return new Response("Error loading navigation", { status: 500 });
-        }
-    }
-    
-    // Handle home content API request
-    if (pathname === '/api/get-home-content') {
-        try {
-            const content = await readFile('public/html/fragments/home.html', 'utf-8');
-            return new Response(content, { 
-                headers: { 'Content-Type': 'text/html' }
-            });
-        } catch (error) {
-            console.error(`Error loading home content: ${error}`);
-            return new Response("Error loading home content", { status: 500 });
-        }
-    }
-    
-    // Handle about content API request
-    if (pathname === '/api/get-about-content') {
-        try {
-            const content = await readFile('public/html/fragments/about.html', 'utf-8');
-            return new Response(content, { 
-                headers: { 'Content-Type': 'text/html' }
-            });
-        } catch (error) {
-            console.error(`Error loading about content: ${error}`);
-            return new Response("Error loading about content", { status: 500 });
-        }
-    }
-    
-    // Handle blog list API request
-    if (pathname === '/api/get-blog-list') {
-        try {
-            const posts = await getBlogPosts();
-            
-            // Generate HTML for blog post list
-            let html = '<h1>Blog Posts</h1><div class="blog-posts">';
-            
-            posts.forEach(post => {
-                const tagsHtml = post.tags ? 
-                    `<span class="post-tags">Tags: ${post.tags}</span>` : '';
-                
-                html += `
-                    <article class="blog-post">
-                        <h3>
-                            <a href="/blog/${post.slug}" 
-                               hx-get="/api/get-post/${post.slug}" 
-                               hx-target="#main-content" 
-                               hx-push-url="/blog/${post.slug}">${post.title}</a>
-                        </h3>
-                        <div class="post-meta">
-                            <span class="post-date">Posted on: ${post.date}</span>
-                            ${tagsHtml}
-                        </div>
-                        <p class="post-excerpt">${post.excerpt || ''}</p>
-                    </article>
-                `;
-            });
-            
-            html += '</div>';
-            
-            return new Response(html, { 
-                headers: { 'Content-Type': 'text/html' }
-            });
-        } catch (error) {
-            console.error(`Error loading blog posts: ${error}`);
-            return new Response("Error loading blog posts", { status: 500 });
-        }
-    }
-    
-    // Handle blog post API request
-    if (pathname.startsWith('/api/get-post/')) {
-        try {
-            const slug = pathname.split('/').pop();
-            const postPath = `public/html/fragments/blog/${slug}.html`;
-            
-            // Check if file exists
-            if (!fs.existsSync(postPath)) {
-                return new Response("Blog post not found", { status: 404 });
-            }
-            
-            const content = await readFile(postPath, 'utf-8');
-            
-            return new Response(content, { 
-                headers: { 'Content-Type': 'text/html' }
-            });
-        } catch (error) {
-            console.error(`Error loading blog post: ${error}`);
-            return new Response("Error loading blog post", { status: 404 });
-        }
-    }
-    
-    // Return null if no API handler matches
-    return null;
+// Check if a file exists
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
-serve({
-    port: 3000,
-    async fetch(req) {
-        const url = new URL(req.url);
-        const pathname = url.pathname;
-        
-        // Security: Prevent path traversal - but allow root path
-        // Skip security check for root path or standard routes
-        if (pathname !== '/' && 
-            !pathname.startsWith('/get-') && 
-            !pathname.startsWith('/api/') && 
-            !pathname.startsWith('/css/') && 
-            !pathname.startsWith('/js/') && 
-            !pathname.startsWith('/images/') && 
-            !pathname.startsWith('/data/') && 
-            !pathname.match(/^\/blog(\/.*)?$/) && 
-            pathname !== '/about' && 
-            pathname !== '/index.html') {
-            
-            // Only apply path traversal check for non-standard paths
-            if (!path.normalize(pathname).startsWith('/')) {
-                return new Response("Forbidden", { status: 403 });
-            }
-        }
+// Process and serve HTML files with includes
+async function serveWithIncludes(req, filepath) {
+  console.log(`Serving with includes: ${filepath}`);
+  
+  const exists = await fileExists(filepath);
+  if (!exists) throw new Error(`File not found: ${filepath}`);
+  
+  const fileContent = await Bun.file(filepath).text();
+  const host = req.headers.get('host') || `localhost:${PORT}`;
+  const proto = req.headers.get('x-forwarded-proto') || 'http';
+  const processed = await processIncludeDirectives(fileContent, process.cwd(), host, proto);
+  
+  return new Response(processed, {
+    headers: { 'Content-Type': 'text/html' }
+  });
+}
 
-        // Try the new API routes first (Vercel compatibility)
-        if (pathname.startsWith('/api/')) {
-            const apiResponse = await handleApiRoutes(pathname);
-            if (apiResponse) {
-                return apiResponse;
-            }
-        }
+// Serve static file
+async function serveStaticFile(filePath) {
+  console.log(`Serving static: ${filePath}`);
+  const ext = path.extname(filePath).toLowerCase();
+  return new Response(Bun.file(filePath), {
+    headers: { 'Content-Type': getContentType(ext) }
+  });
+}
 
-        // HTMX fragment endpoints (original functionality as fallback)
-        if (pathname === '/get-home-content') {
-            try {
-                const content = await readFile('public/html/fragments/home.html', 'utf-8');
-                return new Response(content, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error loading home content: ${error}`);
-                return new Response("Error loading home content", { status: 500 });
-            }
-        }
-        
-        if (pathname === '/get-about-content') {
-            try {
-                const content = await readFile('public/html/fragments/about.html', 'utf-8');
-                return new Response(content, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error loading about content: ${error}`);
-                return new Response("Error loading about content", { status: 500 });
-            }
-        }
-        
-        if (pathname === '/get-blog-list') {
-            try {
-                const posts = await getBlogPosts();
-                
-                // Generate HTML for blog post list
-                let html = '<h1>Blog Posts</h1><div class="blog-posts">';
-                
-                posts.forEach(post => {
-                    const tagsHtml = post.tags ? 
-                        `<span class="post-tags">Tags: ${post.tags}</span>` : '';
-                    
-                    html += `
-                        <article class="blog-post">
-                            <h3>
-                                <a href="/blog/${post.slug}" 
-                                   hx-get="/get-post/${post.slug}" 
-                                   hx-target="#main-content" 
-                                   hx-push-url="true">${post.title}</a>
-                            </h3>
-                            <div class="post-meta">
-                                <span class="post-date">Posted on: ${post.date}</span>
-                                ${tagsHtml}
-                            </div>
-                            <p class="post-excerpt">${post.excerpt || ''}</p>
-                        </article>
-                    `;
-                });
-                
-                html += '</div>';
-                
-                return new Response(html, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error loading blog posts: ${error}`);
-                return new Response("Error loading blog posts", { status: 500 });
-            }
-        }
-        
-        if (pathname.startsWith('/get-post/')) {
-            try {
-                const slug = pathname.split('/').pop();
-                const postPath = `public/html/fragments/blog/${slug}.html`;
-                
-                // Check if file exists
-                if (!fs.existsSync(postPath)) {
-                    return new Response("Blog post not found", { status: 404 });
-                }
-                
-                const content = await readFile(postPath, 'utf-8');
-                
-                return new Response(content, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error loading blog post: ${error}`);
-                return new Response("Error loading blog post", { status: 404 });
-            }
-        }
+// Serve 404 page
+async function serve404(req) {
+  const notFoundPath = path.join(PUBLIC_DIR, '404.html');
+  
+  if (await fileExists(notFoundPath)) {
+    return await serveWithIncludes(req, notFoundPath);
+  }
+  
+  return new Response('<h1>404 - Page Not Found</h1>', {
+    status: 404,
+    headers: { 'Content-Type': 'text/html' }
+  });
+}
 
-        // Handle normal page requests (full HTML pages)
-        if (pathname === '/' || pathname === '/index.html') {
-            try {
-                const file = Bun.file('public/index.html');
-                return new Response(file, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error serving index: ${error}`);
-                return new Response("Error loading page", { status: 500 });
-            }
-        }
-        
-        if (pathname === '/about') {
-            try {
-                const file = Bun.file('public/html/about.html');
-                return new Response(file, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error serving about page: ${error}`);
-                return new Response("Error loading page", { status: 500 });
-            }
-        }
-        
-        if (pathname === '/blog') {
-            try {
-                const file = Bun.file('public/html/blog/index.html');
-                return new Response(file, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error serving blog index: ${error}`);
-                return new Response("Error loading page", { status: 500 });
-            }
-        }
-        
-        if (pathname.match(/^\/blog\/[^\/]+$/)) {
-            try {
-                const slug = pathname.split('/').pop();
-                const postMetadata = await getBlogPosts().then(posts => 
-                    posts.find(post => post.slug === slug)
-                );
-                
-                if (!postMetadata) {
-                    return new Response("Blog post not found", { status: 404 });
-                }
-                
-                // Read the blog post template
-                let templateContent = await readFile('public/html/blog/post.html', 'utf-8');
-                
-                // Replace template variables with actual metadata
-                templateContent = templateContent
-                    .replace('{{title}}', postMetadata.title || 'Blog Post')
-                    .replace('{{excerpt}}', postMetadata.excerpt || 'Read our latest blog post');
-                
-                return new Response(templateContent, { 
-                    headers: { 'Content-Type': 'text/html' }
-                });
-            } catch (error) {
-                console.error(`Error serving blog post page: ${error}`);
-                return new Response("Error loading page", { status: 500 });
-            }
-        }
-
-        // Try serving static files from public directory
-        try {
-            let filePath;
-            if (pathname.startsWith('/css/') || 
-                pathname.startsWith('/js/') || 
-                pathname.startsWith('/images/') ||
-                pathname.startsWith('/data/')) {
-                filePath = path.join('public', pathname);
-            } else {
-                filePath = path.join('public', pathname.slice(1));
-            }
-            
-            const file = Bun.file(filePath);
-            if (await file.exists()) {
-                const contentType = CONTENT_TYPES[path.extname(filePath)] || 'application/octet-stream';
-                return new Response(file, { 
-                    headers: { 'Content-Type': contentType }
-                });
-            }
-        } catch (error) {
-            console.error(`Error serving static file: ${error}`);
-        }
-
-        // Default 404 response
-        return new Response("Page Not Found", { status: 404 });
+// Main request handler
+async function handleRequest(req) {
+  const url = new URL(req.url);
+  const pathname = url.pathname;
+  
+  try {
+    // Handle root request
+    if (pathname === '/' || pathname === '/index.html') {
+      return await serveWithIncludes(req, path.join(PUBLIC_DIR, 'index.html'));
     }
+    
+    // Handle blog post URLs in dist directory
+    if (pathname.startsWith('/blog/post/')) {
+      const postPath = path.join(DIST_DIR, pathname + (pathname.endsWith('.html') ? '' : '.html'));
+      if (await fileExists(postPath)) {
+        return await serveStaticFile(postPath);
+      }
+    }
+    
+    // Try to serve as HTML page with includes
+    let pagePath = path.join(PUBLIC_DIR, pathname);
+    
+    // Try with .html extension if needed
+    if (!pathname.endsWith('.html')) {
+      const pathWithExt = path.join(PUBLIC_DIR, pathname + '.html');
+      if (await fileExists(pathWithExt)) {
+        return await serveWithIncludes(req, pathWithExt);
+      }
+    }
+    
+    // Serve HTML with includes or static file
+    if (await fileExists(pagePath)) {
+      if (pathname.endsWith('.html')) {
+        return await serveWithIncludes(req, pagePath);
+      }
+      return await serveStaticFile(pagePath);
+    }
+    
+    // 404 response
+    return await serve404(req);
+  } catch (err) {
+    console.error(`Server error: ${err.message}`);
+    return new Response('<h1>500 - Server Error</h1>', {
+      status: 500,
+      headers: { 'Content-Type': 'text/html' }
+    });
+  }
+}
+
+// Start the server
+const server = Bun.serve({
+  port: PORT,
+  fetch: handleRequest
 });
 
-console.log("Server running at http://localhost:3000"); 
+console.log(`HTML includes development server running at http://localhost:${PORT}`);
+console.log(`Serving files from: ${PUBLIC_DIR}`); 

@@ -1,30 +1,18 @@
-## Publishing Workflow and Best Practices
+# Blog Publishing Workflow and Best Practices
 
-### Moving from Draft to Production
+## Creating and Publishing Blog Posts
 
-1. **Content Cleanup**
-   - Remove draft version markers from titles (e.g., "Draft v4: ")
-   - Ensure all placeholder images are properly formatted
+1. **Content Preparation**
+   - Ensure content follows the writing guidelines in `writing-guide.md`
+   - Make sure all images are properly formatted and referenced
    - Verify that all source attributions are present and accurate
 
-2. **File System Workflow**
-   - Draft content remains in `/content/blog/drafts/{topic-name}/` until final approval
-   - Finalized markdown is moved to `/content/blog/posts/{topic-name}.md`
-   - Final markdown must be converted to HTML fragment and placed in `/public/html/fragments/blog/{slug}.html`
-   - The slug should match the entry in the blog-posts.json metadata file
-   - HTML fragment must follow the established format with proper article structure and HTMX navigation
+2. **HTML Fragment Creation**
+   - Create the blog post as an HTML fragment in `/public/html/fragments/blog/{slug}.html`
+   - The slug should be a URL-friendly version of the title (e.g., `understanding-ai.html`)
+   - HTML fragment must follow the established format with proper article structure
 
-3. **Metadata Management**
-   - Add an entry to `/public/data/blog-posts.json` with:
-     - title: Post title
-     - slug: URL-friendly version of the title (used in URL paths)
-     - date: Publication date in YYYY-MM-DD format
-     - author: Author name
-     - tags: Comma-separated list of relevant tags
-     - excerpt: Brief summary of the post
-     - path: URL path to the post (usually `/blog/{slug}`)
-
-4. **HTML Fragment Structure**
+3. **HTML Fragment Structure**
    - Each blog post HTML fragment should follow this structure:
    ```html
    <article class="full-blog-post">
@@ -39,24 +27,41 @@
        <!-- Post content here -->
        
        <div class="post-navigation">
-           <a href="/blog" 
-              hx-get="/get-blog-list" 
-              hx-target="#main-content" 
-              hx-push-url="true">← Back to all posts</a>
+           <a href="/blog">← Back to all posts</a>
        </div>
    </article>
    ```
 
+4. **Building the Site**
+   - Run `bun build` to generate the static site
+   - This will create a complete HTML page for your blog post at `dist/blog/post/{slug}.html`
+   - The build process:
+     - Extracts the title and description from your fragment
+     - Creates a full HTML page with navigation and footer
+     - Processes all include directives
+
 5. **Quality Control**
-   - Maintain a copy in the drafts directory until successful publication is confirmed
-   - Verify that the published HTML fragment renders correctly
-   - Check that HTMX navigation works properly
-   - Ensure all images and references are accessible in the production environment
+   - Keep a backup copy of your HTML fragment before publishing
+   - Verify that the generated HTML page renders correctly
+   - Check that navigation links work properly
+   - Ensure all images and references are accessible
 
-### Common Pitfalls to Avoid
+## Static Site Generation Process
 
-- Don't delete draft versions until successful publication is confirmed
-- Ensure the HTML fragment maintains proper HTMX attributes for navigation
-- Make sure the slug in metadata matches the HTML fragment filename
-- Keep metadata in blog-posts.json updated and properly formatted
-- Ensure the HTML fragment follows the established structure for consistent styling 
+When you run `bun build`:
+
+1. The build script reads all blog post fragments from `/public/html/fragments/blog/`
+2. For each fragment, it:
+   - Extracts the title from the `<h1>` tag
+   - Gets a description from the first paragraph
+   - Inserts the fragment content into the blog post template
+   - Processes any include directives (like including navigation and footer)
+   - Writes the complete HTML file to `dist/blog/post/{slug}.html`
+
+## Common Pitfalls to Avoid
+
+- Don't forget to run `bun build` after creating or updating a blog post
+- Make sure your HTML fragment follows the established structure
+- Ensure the HTML uses proper heading hierarchy (h1, h2, h3)
+- Keep all navigation links as regular `<a href="/path">` links, not HTMX attributes
+- Verify that the generated HTML looks correct by checking the file in `dist/blog/post/` 

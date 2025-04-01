@@ -3,8 +3,8 @@
 ## Overview
 
 *   **Project Name:** BitsOf
-*   **Purpose:** Website for BitsOf (AI education/consulting), built with Bun & HTMX. Features a blog with AI-assisted writing workflow.
-*   **Core Technology:** Bun server, HTMX for dynamic content loading, static HTML fragments.
+*   **Purpose:** Website for BitsOf (AI education/consulting), built with Bun & static HTML includes. Features a blog with AI-assisted writing workflow.
+*   **Core Technology:** Bun for development server, static includes for component reuse, static site generation.
 
 ## Team Expertise (Highlights)
 
@@ -12,39 +12,40 @@ Focuses on: Generative AI, Agentic LLMs, Tool Calling, Zapier/N8N automation.
 
 ## Content Structure & URL Mapping
 
-*   Published blog posts live in `/content/blog/posts/` as markdown files
-*   Draft posts are stored in `/content/blog/drafts/`
-*   Final HTML fragments for blog posts are in `/public/html/fragments/blog/`
-*   Blog metadata is stored in `/public/data/blog-posts.json`
+*   HTML fragments for blog posts are in `/public/html/fragments/blog/`
 *   URL structure:
     *   `/` -> Home page
     *   `/about` -> About page
     *   `/blog` -> Blog listing page
-    *   `/blog/{slug}` -> Individual blog post page
+    *   `/blog/post/{slug}` -> Individual blog post page
 
-## Client-Side Logic
+## Static Site Architecture
 
-*   Uses HTMX for dynamic content loading without full page refreshes
-*   Content is loaded via HTMX endpoints that return HTML fragments
-*   Blog post URLs use the slug from metadata rather than the filename
+*   Uses HTML include directives for component reuse
+*   Include directives (`<!--#include file="/path/to/file.html" -->`) are processed at build time
+*   The result is a completely static site with no client-side JavaScript dependencies
+*   Blog post pages are generated from fragments during the build process
+*   Complete static HTML files are created in the `dist` directory
 
-## Server Logic (`server.js`)
+## Development Server (`server.js`)
 
-*   Uses `Bun.serve` (run via `bun dev`).
-*   Serves static assets (`.html`, `.css`, `.js`, images).
-*   Provides HTMX endpoints that return HTML fragments:
-    *   `/get-home-content` - Home page content
-    *   `/get-about-content` - About page content
-    *   `/get-blog-list` - List of all blog posts
-    *   `/get-post/{slug}` - Content for a specific blog post
-*   Blog posts are served from pre-generated HTML fragments in `/public/html/fragments/blog/`
-*   Blog metadata is loaded from `/public/data/blog-posts.json`
+*   Uses Bun's native HTTP server (run via `bun dev`)
+*   Processes include directives on-the-fly during development
+*   Serves static assets (`.html`, `.css`, `.js`, images)
+*   Blog posts are served from the generated HTML in `dist/blog/post/` directory
+
+## Build Process (`build.js`)
+
+*   Processes main HTML pages replacing include directives with actual content
+*   Generates individual blog post pages from fragments in `/public/html/fragments/blog/`
+*   Creates a directory structure in `dist` that matches the URL structure
+*   Copies static assets (CSS, JS, images) to the `dist` directory
+*   Runs via `bun build` command
 
 ## Blog Publishing Workflow
 
-*   **Draft Location:** In-progress posts are in `/content/blog/drafts/` (see `drafting-process.md`).
-*   **Final Markdown:** Completed posts go to `/content/blog/posts/` (example: `openai-models-explained.md`)
-*   **HTML Conversion:** Final markdown is converted to HTML fragments in `/public/html/fragments/blog/` (example: `openai-models-explained.html`)
-*   **Metadata:** Blog post metadata must be added to `/public/data/blog-posts.json`
-*   **Process:** Follows mandatory steps detailed in **`ai-knowledge/drafting-process.md`**.
-*   **Standards:** Adheres to principles in **`ai-knowledge/writing-guide.md`**. 
+*   **HTML Creation:** Blog posts are created as HTML fragments in `/public/html/fragments/blog/` (example: `openai-models-explained.html`)
+*   **Component Structure:** Posts use a consistent HTML structure with proper metadata
+*   **Build Step:** Running `bun build` generates complete HTML pages for each blog post
+*   **Process:** Follows best practices detailed in **`ai-knowledge/drafting-process.md`**
+*   **Standards:** Adheres to principles in **`ai-knowledge/writing-guide.md`** 
