@@ -1,0 +1,25 @@
+name: URL Health Check
+
+on:
+  deployment_status
+
+jobs:
+  check-urls:
+    if: |
+      github.event.deployment_status.state == 'success' &&
+      contains(github.event.deployment_status.target_url, 'vercel.app')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for deployment to stabilize
+        run: sleep 30
+
+      - name: Check URLs
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: |
+            ${{ github.event.deployment_status.target_url }}
+            ${{ github.event.deployment_status.target_url }}/about
+            ${{ github.event.deployment_status.target_url }}/blog/post/openai-models-explained
+          follow-redirect: true
+          max-attempts: 3
+          retry-delay: 5s 
