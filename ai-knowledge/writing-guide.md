@@ -44,7 +44,7 @@
 - Draft content is stored in: `/content/blog/drafts/{topic-name}/`
 - Final markdown is stored in: `/content/blog/posts/{topic-name}.md`
 - HTML fragments are generated to: `/public/html/fragments/blog/{slug}.html`
-- Blog metadata is stored in: `/public/data/blog-posts.json`
+- Blog metadata is extracted from the HTML fragments during the build process.
 
 **Mandatory AI-Collaborative Writing Process:**
 
@@ -106,12 +106,12 @@
 *   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the approved polished draft).
 
 **Phase 5: Publication Process**
-*   **Goal:** Convert final markdown to HTML fragment and update metadata for the website.
+*   **Goal:** Convert final markdown to HTML fragment and prepare for website build.
 *   **Input:** `final.md` from drafts folder
 *   **Collaborative Actions:**
     1. Move the final markdown to `/content/blog/posts/{topic-name}.md`
-    2. Convert markdown to HTML format following the template in `drafting-process.md`
+    2. Convert markdown to HTML format following the template in `drafting-process.md`, ensuring necessary metadata (title, date, tags, etc.) is included within the HTML structure.
     3. Save the HTML fragment to `/public/html/fragments/blog/{slug}.html`
-    4. Add an entry to `/public/data/blog-posts.json` with all required metadata
-    5. Test the published post through the website to ensure proper rendering and navigation
-*   **Output:** Published blog post accessible via the website at `/blog/{slug}` 
+    4. Run `bun build` to generate the final site. The build process extracts metadata from the fragment and creates the full post page.
+    5. Test the published post by viewing the generated file in the `dist` directory or running a local server to ensure proper rendering and navigation.
+*   **Output:** Generated blog post page in the `dist` directory, ready for deployment. 
