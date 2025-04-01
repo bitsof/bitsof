@@ -1,7 +1,7 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "builds": [
-    { "src": "dist/**/*", "use": "@vercel/static" }
-  ]
+  "trailingSlash": false,
+  "public": true,
+  "outputDirectory": "dist"
 } 
