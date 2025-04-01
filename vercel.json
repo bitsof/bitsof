@@ -4,7 +4,10 @@
     { "src": "dist/**/*", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/dist/$1" }
-  ],
-  "buildCommand": "bun build.js"
+    { "src": "^/?$", "dest": "/dist/index.html" },
+    { "src": "^/([^/.]+)/([^/.]+)/([^/.]+)$", "dest": "/dist/$1/$2/$3.html" },
+    { "src": "^/([^/.]+)/([^/.]+)$", "dest": "/dist/$1/$2.html" },
+    { "src": "^/([^/.]+)$", "dest": "/dist/$1.html" },
+    { "src": "/(.+)", "dest": "/dist/$1" }
+  ]
 } 
