@@ -12,7 +12,13 @@
    - The slug should be a URL-friendly version of the title (e.g., `understanding-ai.html`)
    - HTML fragment must follow the established format with proper article structure
 
-3. **HTML Fragment Structure**
+3. **Update Blog Listing**
+   - Add the new blog post to `/public/html/fragments/blog-list.html`
+   - Follow the existing format for blog post entries
+   - Ensure the post metadata (date, tags) matches the blog post fragment
+   - Place newer posts above older ones to maintain chronological order
+
+4. **HTML Fragment Structure**
    - Each blog post HTML fragment should follow this structure:
    ```html
    <article class="full-blog-post">
@@ -32,7 +38,7 @@
    </article>
    ```
 
-4. **Building the Site**
+5. **Building the Site**
    - Run `bun build` to generate the static site
    - This will create a complete HTML page for your blog post at `dist/blog/post/{slug}.html`
    - The build process:
@@ -40,7 +46,7 @@
      - Creates a full HTML page with navigation and footer
      - Processes all include directives
 
-5. **Quality Control**
+6. **Quality Control**
    - Keep a backup copy of your HTML fragment before publishing
    - Verify that the generated HTML page renders correctly
    - Check that navigation links work properly

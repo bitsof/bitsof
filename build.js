@@ -125,6 +125,105 @@ async function processHtmlFile(filename) {
   }
 }
 
+// Extract metadata from a blog post fragment
+async function extractPostMetadata(filePath, slug) {
+  const content = await fs.readFile(filePath, 'utf8');
+  
+  // Extract title from h1
+  const titleMatch = content.match(/<h1>(.*?)<\/h1>/);
+  const title = titleMatch ? titleMatch[1] : 'Untitled Post';
+  
+  // Extract first paragraph for excerpt
+  const excerptMatch = content.match(/<p>(.*?)<\/p>/);
+  const excerpt = excerptMatch ? excerptMatch[1].substring(0, 155) + '...' : '';
+  
+  // Extract metadata from post-meta div
+  const metaMatch = content.match(/<div class="post-meta">([\s\S]*?)<\/div>/);
+  let date = new Date();
+  let tags = [];
+  
+  if (metaMatch) {
+    // Extract date
+    const dateMatch = metaMatch[1].match(/Posted on: (.*?)(?:<\/span>|\n)/);
+    if (dateMatch) {
+      date = new Date(dateMatch[1]);
+    }
+    
+    // Extract tags
+    const tagsMatch = metaMatch[1].match(/Tags: (.*?)(?:<\/span>|\n)/);
+    if (tagsMatch) {
+      tags = tagsMatch[1].split(', ').map(tag => tag.trim());
+    }
+  }
+  
+  return {
+    slug,
+    title,
+    date,
+    tags,
+    excerpt
+  };
+}
+
+// Generate the blog list HTML
+function generateBlogListHtml(posts) {
+  // Sort posts by date, newest first
+  posts.sort((a, b) => b.date - a.date);
+  
+  return `<h1>Blog Posts</h1>
+<div class="blog-posts">
+    ${posts.map(post => `<article class="blog-post">
+        <h3>
+            <a href="/blog/post/${post.slug}">${post.title}</a>
+        </h3>
+        <div class="post-meta">
+            <span class="post-date">Posted on: ${post.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}</span>
+            <span class="post-tags">Tags: ${post.tags.join(', ')}</span>
+        </div>
+        <p class="post-excerpt">${post.excerpt}</p>
+    </article>`).join('\n    ')}
+</div>`;
+}
+
+// Generate blog list fragment
+async function generateBlogList() {
+  try {
+    const fragmentsDir = path.join(sourceDir, 'html/fragments/blog');
+    const files = await fs.readdir(fragmentsDir);
+    const posts = [];
+    
+    // Collect metadata from all posts
+    for (const file of files) {
+      if (file.endsWith('.html')) {
+        const slug = file.replace('.html', '');
+        const metadata = await extractPostMetadata(
+          path.join(fragmentsDir, file),
+          slug
+        );
+        posts.push(metadata);
+      }
+    }
+    
+    // Generate and write the blog list
+    const blogListHtml = generateBlogListHtml(posts);
+    const blogListPath = path.join(sourceDir, 'html/fragments/blog-list.html');
+    
+    // Ensure the fragments directory exists
+    await ensureDir(path.dirname(blogListPath));
+    
+    // Write the generated list
+    await fs.writeFile(blogListPath, blogListHtml);
+    console.log(`✓ Generated blog list with ${posts.length} posts`);
+    
+  } catch (err) {
+    console.error(`Error generating blog list: ${err.message}`);
+  }
+}
+
 // Generate individual blog post pages from fragments
 async function generateBlogPosts() {
   try {
@@ -154,33 +253,27 @@ async function generateBlogPosts() {
         console.log(`Generating blog post page: ${postId}`);
         
         // Read the post content
-        let postContent = await fs.readFile(fragmentPath, 'utf8');
+        let content = await fs.readFile(fragmentPath, 'utf8');
         
         // Clean up HTMX attributes from the content if they exist
-        postContent = postContent.replace(/hx-get="[^"]*"/g, '');
-        postContent = postContent.replace(/hx-target="[^"]*"/g, '');
-        postContent = postContent.replace(/hx-push-url="[^"]*"/g, '');
+        content = content.replace(/hx-get="[^"]*"/g, '');
+        content = content.replace(/hx-target="[^"]*"/g, '');
+        content = content.replace(/hx-push-url="[^"]*"/g, '');
         
         // Replace back-to-blog links to use regular links
-        postContent = postContent.replace(
+        content = content.replace(
           /<a\s+href="\/blog"[^>]*>/g, 
           '<a href="/blog">'
         );
         
-        // Extract title and description (simplified)
-        const titleMatch = postContent.match(/<h1>(.*?)<\/h1>/);
-        const title = titleMatch ? titleMatch[1] : 'Blog Post';
-        
-        const descriptionMatch = postContent.match(/<p>(.*?)<\/p>/);
-        const description = descriptionMatch 
-          ? descriptionMatch[1].substring(0, 155) + '...' 
-          : 'Read our latest blog post on BitsOf.';
+        // Get metadata for title and description
+        const metadata = await extractPostMetadata(fragmentPath, postId);
         
         // Create the post HTML
         let postHtml = postTemplate
-          .replace('{{TITLE}}', title)
-          .replace('{{DESCRIPTION}}', description)
-          .replace('{{CONTENT}}', postContent);
+          .replace('{{TITLE}}', metadata.title)
+          .replace('{{DESCRIPTION}}', metadata.excerpt)
+          .replace('{{CONTENT}}', content);
         
         // Process include directives in the generated file
         const processed = await processIncludeDirectives(postHtml, process.cwd(), host, proto);
@@ -205,6 +298,9 @@ async function build() {
     // Clean output directory
     await fs.rm(outputDir, { recursive: true, force: true });
     await ensureDir(outputDir);
+    
+    // Generate the blog list first
+    await generateBlogList();
     
     // Process main HTML pages
     for (const page of mainPages) {
