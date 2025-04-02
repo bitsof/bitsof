@@ -1,13 +1,12 @@
 {
   "name": "bitsof",
   "version": "1.0.0",
+  "author": "",
   "description": "bitsof: AI Exploration & Business Solutions website.",
+  "keywords": ["markdown", "bun", "static", "javascript"],
+  "license": "ISC",
   "scripts": {
     "dev": "bun --hot server.js",
     "build": "bun ./build.js"
-  },
-  "dependencies": {},
-  "keywords": ["markdown", "bun", "static", "javascript"],
-  "author": "",
-  "license": "ISC"
-} 
+  }
+}
