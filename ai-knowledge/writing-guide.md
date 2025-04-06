@@ -75,35 +75,32 @@
     *   **Analyze for:** Accuracy signals, Clarity/Explanation issues, Structural flow, **Tone/Voice alignment vs. Plan**, Completeness vs. Plan, Conciseness opportunities.
     *   **Output:** `draft-v1-feedback-ai-v1.md`.
 
-**Phase 3: Iterative Refinement & Feedback**
-*   **Goal:** Systematically improve the draft through cycles of editing and AI review, focusing on accuracy, clarity, conciseness, and tone alignment.
+**Phase 3: Automated Iterative Refinement & Feedback**
+*   **Goal:** Systematically improve the draft through **automated cycles** of editing and AI review, focusing on accuracy, clarity, conciseness, and tone alignment.
 *   **Input:** Previous `draft-v{n}.md`, corresponding `draft-v{n}-feedback-ai-v{m}.md`.
-*   **Collaborative Actions (Repeat Cycle - Expect 1-3 cycles typical, especially for tone):**
-    1.  Review AI feedback & user notes (provide specific tone examples if needed).
-    2.  Implement suggestions (especially conciseness, clarity, tone adjustments).
-    3.  Perform rigorous fact-checking on flagged items or statistics.
-    4.  Refine arguments, flow, grammar, style.
-    5.  Produce `draft-v{n+1}.md`.
-*   **AI Analysis Task (Refinement Review - Repeat Cycle):**
-    *   **Input:** `draft-v{n+1}.md`, previous `AI Feedback Report`.
-    *   **Analyze for:** Addressed feedback, Remaining conciseness/clarity issues, Tone improvements/consistency, Polish/Fluency errors, Correctness flags.
-    *   **Output:** `draft-v{n+1}-feedback-ai-v{m}.md`.
-*   **(Cycle End):** Phase ends when AI feedback indicates high polish and collaborative agreement that goals (incl. tone) are met.
-*   **Output:** `polished-draft.md` (or final `draft-v{n}.md`).
+*   **Automated Actions (Repeat Cycle - e.g., Max 3 Cycles or until feedback stabilizes):**
+    1.  AI reviews its own feedback & user notes (if any were provided during planning).
+    2.  AI implements suggestions (especially conciseness, clarity, tone adjustments).
+    3.  AI performs self-correction/fact-checking attempts on flagged items (noting areas still requiring human verification).
+    4.  AI refines arguments, flow, grammar, style.
+    5.  AI produces `draft-v{n+1}.md`.
+    6.  AI performs analysis task (Refinement Review) on the new draft:
+        *   **Input:** `draft-v{n+1}.md`, previous `AI Feedback Report`.
+        *   **Analyze for:** Addressed feedback, Remaining conciseness/clarity issues, Tone improvements/consistency, Polish/Fluency errors, Correctness flags.
+        *   **Output:** `draft-v{n+1}-feedback-ai-v{m}.md`.
+*   **(Cycle End Condition):** Phase ends automatically when AI feedback indicates high polish (minimal suggested changes) OR a maximum number of cycles (e.g., 3) is reached.
+*   **Output Presented to User:** `polished-draft.md` (final `draft-v{n+1}.md` from the loop), `final-feedback.md` (the corresponding `draft-v{n+1}-feedback-ai-v{m}.md`).
 
-**Phase 4: Finalization, Assessment & Publishing Prep**
-*   **Goal:** Apply final proofreading, perform quality checks, optionally assess the process, and prepare the final text.
-*   **Input:** `polished-draft.md` (or final `draft-v{n}.md`).
-*   **AI Analysis Task (Final Quality Check):**
-    *   **Input:** Polished Draft
-    *   **Analyze for:** Proofreading errors (typos, punctuation), Readability issues (minor awkward phrasing), Consistency (terms, formatting), Final conciseness check.
-    *   **Output:** `final-quality-check-ai-v1.md` (list of suggested minor corrections).
+**Phase 4: Final Review, Assessment & Publishing Prep**
+*   **Goal:** **Human review** of the AI-polished draft, apply final proofreading, perform quality checks, optionally assess the process, and prepare the final text.
+*   **Input:** `polished-draft.md`, `final-feedback.md` (provided by automated Phase 3).
 *   **Collaborative Actions:**
-    1.  Review final AI suggestions; apply necessary minor fixes.
-    2.  Perform final human read-through and quality review.
-    3.  **(Optional but Recommended):** Generate a `final-assessment.md` summarizing the process, learnings, and suggestions for future improvement.
-    4.  Approve final content.
-*   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the approved polished draft).
+    1.  **Human reviews** the polished draft and the final AI feedback.
+    2.  **Human performs** rigorous fact-checking on any remaining flagged items or statistics.
+    3.  **Human applies** any necessary final touch-ups or stylistic overrides.
+    4.  **(Optional but Recommended):** Generate a `final-assessment.md` summarizing the process, learnings, and suggestions for future improvement.
+    5.  **Human approves** final content.
+*   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the human-approved polished draft).
 
 **Phase 5: Publication Process**
 *   **Goal:** Convert final markdown to HTML fragment and prepare for website build.
