@@ -2,6 +2,8 @@
 
 ## Creating and Publishing Blog Posts
 
+(Note: The iterative drafting/feedback phases described in `writing-guide.md` can potentially be automated, with primary human intervention focused on initial planning and final review/approval before publication.)
+
 1. **Content Preparation**
    - Ensure content follows the writing guidelines in `writing-guide.md`
    - Make sure all images are properly formatted and referenced
