@@ -264,14 +264,6 @@ nav a:hover::after {
     margin-top: 2rem;
 }
 
-.service-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-}
-
 .service-card {
     background-color: #fff;
     border-radius: var(--border-radius);
@@ -361,35 +353,9 @@ nav a:hover::after {
     color: var(--primary-dark);
 }
 
-.post-meta {
-    font-size: 0.9rem;
-    color: var(--text-light);
-    margin-bottom: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
 .post-tags {
     display: inline-block;
     margin: 0;
-}
-
-/* Fix for blog list metadata */
-article > h3 + :not(div):not(p) {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    margin-bottom: 0.5rem;
-    display: block;
-    white-space: pre-wrap;
-    line-height: 1.5;
-    border: none;
-    box-shadow: none;
-}
-
-.post-excerpt {
-    margin: 0.5rem 0 0 0;
-    color: var(--text-color);
 }
 
 /* Full blog post styling */
@@ -401,76 +367,42 @@ article > h3 + :not(div):not(p) {
 .full-blog-post h1 {
     margin-bottom: 1.5rem;
     text-align: center;
+    color: var(--primary-color);
 }
 
 .full-blog-post h2 {
-    margin-top: 2rem;
-    margin-bottom: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    position: relative;
 }
 
 .full-blog-post h3 {
-    margin-top: 1.75rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     font-size: 1.3rem;
 }
 
 .full-blog-post .post-meta {
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    background-color: var(--light-bg);
+    padding: 0.75rem 0.5rem;
+    border-radius: var(--border-radius);
 }
 
 .full-blog-post .post-meta span {
     display: inline-block;
 }
 
-/* Fix for metadata in blog post page */
-article > h1 + :not(h2) {
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-/* Fix for metadata text that's directly in the article */
-article > h1:first-child + :not(h2) {
-    display: block;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    white-space: pre-wrap;
-    line-height: 1.5;
-    border: none;
-    box-shadow: none;
-}
-
-/* Add spacing before first heading */
-article > h1:first-child ~ h2:first-of-type {
-    margin-top: 1.5rem;
-}
-
-/* Blog post title styling */
-article h3 a {
-    display: block;
-}
-
-/* Center only full blog post titles */
-.full-blog-post h1 {
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
 .full-blog-post p {
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
     line-height: 1.7;
 }
 
 .full-blog-post ul, 
 .full-blog-post ol {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
     padding-left: 1.75rem;
     color: var(--text-color);
 }
@@ -486,6 +418,11 @@ article h3 a {
     border-top: 1px solid var(--border-color);
 }
 
+/* Blog post title styling */
+article h3 a {
+    display: block;
+}
+
 /* Main content */
 main {
     max-width: 1200px;
@@ -497,38 +434,6 @@ main {
 
 #content {
     margin-bottom: 3rem;
-}
-
-/* Markdown content styling */
-#content h1 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-}
-
-#content h2 {
-    color: var(--primary-dark);
-    margin: 2rem 0 1rem;
-    position: relative;
-}
-
-#content h2::after {
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 3px;
-    background-color: var(--primary-color);
-    bottom: -10px;
-    left: 0;
-}
-
-#content ul {
-    padding-left: 1.75rem;
-    margin-bottom: 1.5rem;
-}
-
-ul {
-    padding-left: 1.75rem;
-    margin-bottom: 1.5rem;
 }
 
 /* Technologies Section */
@@ -573,18 +478,15 @@ ul {
     text-align: center;
 }
 
-#content a {
+/* Rename #content a to .full-blog-post a */
+.full-blog-post a {
     color: var(--primary-color);
     text-decoration: none;
     border-bottom: 1px dotted var(--primary-color);
 }
 
-#content a:hover {
+.full-blog-post a:hover {
     border-bottom: 1px solid var(--primary-color);
-}
-
-#content p {
-    margin: 1rem 0 1.5rem;
 }
 
 /* Code blocks */
@@ -705,4 +607,9 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
+}
+
+.post-excerpt {
+    margin: 0.5rem 0 0 0;
+    color: var(--text-color);
 }                                                      
