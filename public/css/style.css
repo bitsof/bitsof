@@ -448,10 +448,15 @@ article > h1:first-child ~ h2:first-of-type {
     margin-top: 1.5rem;
 }
 
-/* Center blog post titles in blog list */
+/* Blog post title styling */
 article h3 a {
-    text-align: center;
     display: block;
+}
+
+/* Center only full blog post titles */
+.full-blog-post h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .full-blog-post p {
@@ -694,4 +699,4 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
-}                                  
+}                                    
