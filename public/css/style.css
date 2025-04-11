@@ -475,7 +475,7 @@ article h3 a {
 }
 
 .full-blog-post li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 .full-blog-post .post-navigation {
@@ -703,4 +703,4 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
-}                                        
+}                                          
