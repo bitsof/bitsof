@@ -364,10 +364,10 @@ nav a:hover::after {
 .post-meta {
     font-size: 0.9rem;
     color: var(--text-light);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .post-tags {
@@ -379,12 +379,10 @@ nav a:hover::after {
 article > h3 + :not(div):not(p) {
     font-size: 0.9rem;
     color: var(--text-light);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     display: block;
     white-space: pre-wrap;
-    line-height: 1.8;
-    padding-left: 0.5rem;
-    border-left: 3px solid var(--border-color);
+    line-height: 1.5;
 }
 
 .post-excerpt {
@@ -400,6 +398,7 @@ article > h3 + :not(div):not(p) {
 
 .full-blog-post h1 {
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .full-blog-post h2 {
@@ -410,44 +409,49 @@ article > h3 + :not(div):not(p) {
 .full-blog-post h3 {
     margin-top: 1.75rem;
     margin-bottom: 1rem;
+    font-size: 1.3rem;
 }
 
 .full-blog-post .post-meta {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .full-blog-post .post-meta span {
-    display: block;
+    display: inline-block;
 }
 
 /* Fix for metadata in blog post page */
 article > h1 + :not(h2) {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 0.9rem;
     color: var(--text-light);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 /* Fix for metadata text that's directly in the article */
 article > h1:first-child + :not(h2) {
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 0.9rem;
     color: var(--text-light);
     white-space: pre-wrap;
-    line-height: 1.8;
-    padding-left: 0.5rem;
-    border-left: 3px solid var(--border-color);
+    line-height: 1.5;
 }
 
 /* Add spacing before first heading */
 article > h1:first-child ~ h2:first-of-type {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+}
+
+/* Center blog post titles in blog list */
+article h3 a {
+    text-align: center;
+    display: block;
 }
 
 .full-blog-post p {
@@ -690,4 +694,4 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
-}                  
+}                                  
