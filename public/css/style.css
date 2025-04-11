@@ -378,7 +378,7 @@ nav a:hover::after {
 /* Fix for blog list metadata */
 article > h3 + :not(div):not(p) {
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text-color);
     margin-bottom: 0.5rem;
     display: block;
     white-space: pre-wrap;
@@ -429,7 +429,7 @@ article > h3 + :not(div):not(p) {
 article > h1 + :not(h2) {
     margin-bottom: 1rem;
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -440,7 +440,7 @@ article > h1:first-child + :not(h2) {
     display: block;
     margin-bottom: 1rem;
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text-color);
     white-space: pre-wrap;
     line-height: 1.5;
     border: none;
@@ -472,10 +472,12 @@ article h3 a {
 .full-blog-post ol {
     margin-bottom: 1.5rem;
     padding-left: 1.75rem;
+    color: var(--text-color);
 }
 
 .full-blog-post li {
     margin-bottom: 0.1rem;
+    color: var(--text-color);
 }
 
 .full-blog-post .post-navigation {
@@ -703,4 +705,4 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
-}                                            
+}                                                      
