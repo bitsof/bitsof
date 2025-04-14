@@ -1,1 +1,34 @@
-/dist/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS specific
+.DS_Store
+
+# we don't need to save what is in /dist
+/dist
+
+# Task files
+tasks.json
+tasks/ 
+
+.cursor/mcp.json
