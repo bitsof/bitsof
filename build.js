@@ -33,6 +33,7 @@ const postTemplate = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{TITLE}} - BitsOf</title>
     <meta name="description" content="{{DESCRIPTION}}">
+    <meta name="keywords" content="{{KEYWORDS}}">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -141,6 +142,7 @@ async function extractPostMetadata(filePath, slug) {
   const metaMatch = content.match(/<div class="post-meta">([\s\S]*?)<\/div>/);
   let date = new Date();
   let tags = [];
+  let keywords = [];
   
   if (metaMatch) {
     // Extract date
@@ -154,6 +156,12 @@ async function extractPostMetadata(filePath, slug) {
     if (tagsMatch) {
       tags = tagsMatch[1].split(', ').map(tag => tag.trim());
     }
+    
+    // Extract keywords
+    const keywordsMatch = metaMatch[1].match(/Keywords: (.*?)(?:<\/span>|\n)/);
+    if (keywordsMatch) {
+      keywords = keywordsMatch[1].split(', ').map(keyword => keyword.trim());
+    }
   }
   
   return {
@@ -161,6 +169,7 @@ async function extractPostMetadata(filePath, slug) {
     title,
     date,
     tags,
+    keywords,
     excerpt
   };
 }
@@ -273,6 +282,7 @@ async function generateBlogPosts() {
         let postHtml = postTemplate
           .replace('{{TITLE}}', metadata.title)
           .replace('{{DESCRIPTION}}', metadata.excerpt)
+          .replace('{{KEYWORDS}}', metadata.keywords.join(', '))
           .replace('{{CONTENT}}', content);
         
         // Process include directives in the generated file
@@ -324,4 +334,4 @@ async function build() {
 }
 
 // Run the build
-build(); 
+build();      
