@@ -32,3 +32,5 @@ tasks.json
 tasks/ 
 
 .cursor/mcp.json
+.env*.local
+.shortest/
