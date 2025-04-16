@@ -54,6 +54,7 @@
 *   **Collaborative Actions:**
     *   Refine topic, audience persona(s), key takeaways.
     *   Define target tone (e.g., formal expert, conversational guide, slightly humorous).
+    *   Identify SEO keywords following the guidelines in `seo-optimization.md`.
     *   Brainstorm key points; develop logical outline.
     *   Identify research needs (stats, facts, sources).
     *   Identify *key representative* examples (e.g., tools, case studies) needed, avoiding exhaustive lists unless necessary.
@@ -98,8 +99,9 @@
     1.  **Human reviews** the polished draft and the final AI feedback.
     2.  **Human performs** rigorous fact-checking on any remaining flagged items or statistics.
     3.  **Human applies** any necessary final touch-ups or stylistic overrides.
-    4.  **(Optional but Recommended):** Generate a `final-assessment.md` summarizing the process, learnings, and suggestions for future improvement.
-    5.  **Human approves** final content.
+    4.  **Review and optimize SEO keywords** based on the final content.
+    5.  **(Optional but Recommended):** Generate a `final-assessment.md` summarizing the process, learnings, and suggestions for future improvement.
+    6.  **Human approves** final content.
 *   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the human-approved polished draft).
 
 **Phase 5: Publication Process**
@@ -111,4 +113,4 @@
     3. Save the HTML fragment to `/public/html/fragments/blog/{slug}.html`
     4. Run `bun build` to generate the final site. The build process extracts metadata from the fragment and creates the full post page.
     5. Test the published post by viewing the generated file in the `dist` directory or running a local server to ensure proper rendering and navigation.
-*   **Output:** Generated blog post page in the `dist` directory, ready for deployment. 
+*   **Output:** Generated blog post page in the `dist` directory, ready for deployment.     
