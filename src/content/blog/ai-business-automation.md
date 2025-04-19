@@ -1,6 +1,6 @@
 ---
 title: "AI in Sales: Why Your Team Needs a Smart Assistant, Not a Replacement"
-date: 2024-03-20
+pubDate: 2024-03-20
 description: "Explore how AI can empower sales teams through smart automation while maintaining the human touch in customer relationships."
 tags: ["AI", "Sales", "Automation", "Business"]
 ---
@@ -81,4 +81,4 @@ The most effective path forward involves **human-centric, hybrid automation** â€
 
 Use AI as a powerful partner to handle routine work and data analysis, freeing your invaluable human team to focus on the strategic, empathetic tasks where they deliver unique value. The goal is a future that is both **efficient and profoundly human.**
 
-**Actionable Step:** Review your team's workflow this week. Identify one repetitive task where mindful AI assistance could free up time for more strategic activities. Start there, integrating thoughtfully, step by step. 
+**Actionable Step:** Review your team's workflow this week. Identify one repetitive task where mindful AI assistance could free up time for more strategic activities. Start there, integrating thoughtfully, step by step.  

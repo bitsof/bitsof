@@ -1,3 +1,11 @@
+---
+title: "Your Bath Uses More Energy Than AI (And Other Surprising Facts)"
+description: "Picture this: You're soaking in a hot bath, scrolling through headlines about the catastrophic environmental impact of AI. The irony? That relaxing bath is probably using more energy than a week's worth of your AI interactions."
+pubDate: 2025-03-15
+tags: ["AI", "Environment", "Energy", "Technology", "Climate"]
+author: "BitsOf Team"
+---
+
 # Your Bath Uses More Energy Than AI (And Other Surprising Facts)
 
 ## The Great AI Energy Panic: Have We Lost Perspective?
@@ -109,4 +117,4 @@ So the next time you see a headline about AI's "massive" energy footprint, remem
 
 Now if you'll excuse me, I'm going to go feel guilty about that long shower I took this morning – it used more energy than writing this entire article with AI assistance.
 
-What everyday activity were you surprised to learn uses more energy than AI? Let me know in the comments below! And if you found this perspective eye-opening, share it with someone who might be unnecessarily worried about their AI usage. 
+What everyday activity were you surprised to learn uses more energy than AI? Let me know in the comments below! And if you found this perspective eye-opening, share it with someone who might be unnecessarily worried about their AI usage.  
