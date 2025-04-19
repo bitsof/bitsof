@@ -1,60 +1,44 @@
 ---
+import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import { SITE_TITLE } from '../../consts';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const formatDate = (date) => {
+	return new Date(date).toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	});
+};
 ---
 
 <MainLayout title={`Blog | ${SITE_TITLE}`} description="Explore our blog for insights on AI solutions, implementation strategies, and technology trends to help your business thrive.">
 	<h1>Blog Posts</h1>
 	<div class="blog-posts">
-		<article class="blog-post">
-			<h3>
-				<a href="/blog/post/improving-ai-agents">Best Practices for Improving AI Agents: Prompt Engineering and Knowledge Compounding</a>
-			</h3>
-			<div class="post-meta">
-				<span class="post-date">Posted on: April 11, 2025</span>
-				<span class="post-tags">Tags: AI, Agents, Prompt Engineering, Knowledge Compounding, RAG, Fine-tuning, Best Practices</span>
-			</div>
-			<p class="post-excerpt">Artificial intelligence (AI) agents are rapidly becoming integral to applications ranging from customer service to complex problem-solving. While impressiv...</p>
-		</article>
-		<article class="blog-post">
-			<h3>
-				<a href="/blog/post/solopreneur-business-automation">AI-Powered Scaling for Solopreneurs: Building a Business that Grows Beyond You</a>
-			</h3>
-			<div class="post-meta">
-				<span class="post-date">Posted on: April 11, 2025</span>
-				<span class="post-tags">Tags: AI, Solopreneurs, Automation, Business, Productivity, Scaling</span>
-			</div>
-			<p class="post-excerpt">The modern solopreneur has unprecedented power. AI tools have transformed the business landscape, enabling a single person to operate with the capabilities...</p>
-		</article>
-		<article class="blog-post">
-			<h3>
-				<a href="/blog/post/ai-decision-making">The Decision Revolution: Leveraging AI for Superior Decision Making</a>
-			</h3>
-			<div class="post-meta">
-				<span class="post-date">Posted on: April 11, 2025</span>
-				<span class="post-tags">Tags: AI, Decision Making, Business, Productivity, Ethics</span>
-			</div>
-			<p class="post-excerpt">In today's complex world, the quality of our decisions directly impacts our success. Whether you're a business leader navigating market uncertainties, a de...</p>
-		</article>
-		<article class="blog-post">
-			<h3>
-				<a href="/blog/post/importance-of-prds-for-ai">The Importance of PRDs for AI Work: Guiding Your Digital Workforce</a>
-			</h3>
-			<div class="post-meta">
-				<span class="post-date">Posted on: April 11, 2025</span>
-				<span class="post-tags">Tags: AI, Product Management, PRD, Requirements, Planning, Design</span>
-			</div>
-			<p class="post-excerpt">In the rapidly evolving landscape of AI implementation, one truth remains constant: artificial intelligence, like human intelligence, requires clear direct...</p>
-		</article>
-		<article class="blog-post">
-			<h3>
-				<a href="/blog/post/llm-environmental-impact">Your Bath Uses More Energy Than AI (And Other Surprising Facts)</a>
-			</h3>
-			<div class="post-meta">
-				<span class="post-date">Posted on: April 2, 2025</span>
-				<span class="post-tags">Tags: AI, Environment, Energy, Technology, Climate</span>
-			</div>
-			<p class="post-excerpt">Picture this: You're soaking in a hot bath, scrolling through headlines about the "catastrophic environmental impact" of AI. The irony? That relaxing bath ...</p>
-		</article>
+		{posts.map(post => {
+			// Extract slug from id (e.g., "blog/first-post.md" -> "first-post")
+			const slug = post.id.split('/').pop().replace(/\.mdx?$/, '');
+			return (
+				<article class="blog-post">
+					<h3>
+						<a href={`/blog/${slug}`}>{post.data.title}</a>
+					</h3>
+					<div class="post-meta">
+						<span class="post-date">Posted on: {formatDate(post.data.pubDate)}</span>
+						{post.data.tags && (
+							<span class="post-tags">Tags: {post.data.tags.join(', ')}</span>
+						)}
+					</div>
+					<p class="post-excerpt">{post.data.description}</p>
+				</article>
+			);
+		})}
+
+		{posts.length === 0 && (
+			<p>No blog posts found. Check back soon for new content!</p>
+		)}
 	</div>
 </MainLayout>
