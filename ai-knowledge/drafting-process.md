@@ -8,6 +8,7 @@
    - Ensure content follows the writing guidelines in `writing-guide.md`
    - Make sure all images are properly formatted and referenced
    - Verify that all source attributions are present and accurate
+   - Include SEO keywords following the guidelines in `seo-optimization.md`
 
 2. **HTML Fragment Creation**
    - Create the blog post as an HTML fragment in `/public/html/fragments/blog/{slug}.html`
@@ -30,6 +31,7 @@
            <span class="post-date">Posted on: YYYY-MM-DD</span>
            <span class="post-tags">Tags: tag1, tag2, tag3</span>
            <span class="post-author">By: Author Name</span>
+           <span class="post-keywords">Keywords: primary-keyword, secondary-keyword-1, secondary-keyword-2</span>
        </div>
        
        <!-- Post content here -->
@@ -72,4 +74,4 @@ When you run `bun build`:
 - Make sure your HTML fragment follows the established structure
 - Ensure the HTML uses proper heading hierarchy (h1, h2, h3)
 - Keep all navigation links as regular `<a href="/path">` links, not HTMX attributes
-- Verify that the generated HTML looks correct by checking the file in `dist/blog/post/` 
+- Verify that the generated HTML looks correct by checking the file in `dist/blog/post/`     
