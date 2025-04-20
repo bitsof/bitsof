@@ -27,40 +27,115 @@
 * **Volume vs. Competition:** Balance between search popularity and ranking difficulty
 * **Business Value:** Will ranking for this term drive valuable traffic?
 
-## Implementing Keywords in Blog Posts
+## Implementing Keywords in Astro Blog Posts
 
-### Title Optimization
+### Frontmatter Configuration
+In Astro, keywords are added to the blog post frontmatter:
+
+```markdown
+---
+title: "Your Blog Post Title"
+description: "Your blog post description"
+pubDate: 2025-04-20
+tags: ["Tag1", "Tag2", "Tag3"]
+keywords: ["primary keyword", "secondary keyword 1", "secondary keyword 2", "long-tail keyword"]
+author: "Author Name"
+---
+```
+
+### Content Schema Configuration
+The content schema in `src/content/config.ts` includes a keywords field:
+
+```typescript
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.date(),
+    tags: z.array(z.string()).optional(),
+    keywords: z.array(z.string()).optional(),
+    author: z.string().optional(),
+    // other fields...
+  }),
+});
+```
+
+### BaseHead Component Integration
+The `BaseHead.astro` component includes keywords in the meta tags:
+
+```astro
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  keywords?: string[];
+}
+
+const { title, description, image = '/blog-placeholder-1.jpg', keywords = [] } = Astro.props;
+---
+
+<!-- Other meta tags -->
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+```
+
+### Layout Component Integration
+The blog post layout passes keywords to the BaseHead component:
+
+```astro
+---
+// Import statements
+
+const { title, description, pubDate, updatedDate, heroImage, keywords } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} keywords={keywords} />
+    <!-- Other head content -->
+  </head>
+  <!-- Body content -->
+</html>
+```
+
+## Best Practices for SEO
+
+### Title and Meta Description
 * Include the primary keyword in the title, preferably near the beginning
 * Keep titles under 60 characters to avoid truncation in search results
-* Make titles compelling and click-worthy while remaining accurate
+* Write a compelling meta description under 160 characters that includes primary and secondary keywords
 
-### Meta Description
-* Include primary and if possible secondary keywords
-* Write a compelling summary under 160 characters
-* Focus on motivating clicks from search results
-
-### Heading Structure
-* Use H1 for the main title (include primary keyword)
-* Use H2s for major sections (include secondary keywords where natural)
-* Use H3s for subsections (opportunity for additional related terms)
-
-### Content Implementation
+### Content Structure
+* Use proper heading hierarchy (h1, h2, h3) with keywords in headings
 * Include primary keyword in the first paragraph
 * Use secondary keywords throughout the content naturally
 * Aim for a keyword density of 1-2% (avoid keyword stuffing)
-* Use variations and synonyms for a more natural reading experience
 
 ### URL Structure
-* Include the primary keyword in the URL slug
-* Keep URLs short and descriptive
-* Use hyphens to separate words
+* Astro automatically creates URL slugs from the filename
+* Use descriptive filenames that include the primary keyword
+* Use hyphens to separate words in filenames
 
 ### Image Optimization
 * Use descriptive, keyword-rich file names
 * Include keywords in alt text when appropriate
 * Optimize image size for faster loading
 
-## Best Practices
+## Additional Astro SEO Features
+
+### Sitemap Generation
+Astro automatically generates a sitemap for your site, which helps search engines discover and index your content.
+
+### RSS Feed
+Astro includes built-in RSS feed generation, which can help distribute your content and improve SEO.
+
+### OpenGraph and Twitter Cards
+Astro's BaseHead component includes OpenGraph and Twitter Card meta tags, which improve how your content appears when shared on social media.
+
+## DO's and DON'Ts
 
 ### DO:
 * Write for humans first, search engines second
@@ -76,17 +151,11 @@
 * Sacrifice readability for keyword placement
 * Use the exact same keywords across multiple posts (keyword cannibalization)
 
-## Adding Keywords to Blog Post HTML
+## Monitoring and Improvement
 
-In the BitsOf system, keywords should be added to the post-meta section of blog post HTML fragments:
+After implementing keywords, monitor your site's performance using tools like:
+* Google Search Console
+* Google Analytics
+* Ahrefs or SEMrush
 
-```html
-<div class="post-meta">
-    <span class="post-date">Posted on: YYYY-MM-DD</span>
-    <span class="post-tags">Tags: tag1, tag2, tag3</span>
-    <span class="post-author">By: Author Name</span>
-    <span class="post-keywords">Keywords: primary-keyword, secondary-keyword-1, secondary-keyword-2</span>
-</div>
-```
-
-These keywords will be automatically extracted during the build process and added to the meta tags of the generated HTML pages.
+Regularly review and update your keyword strategy based on performance data and changing search trends.
