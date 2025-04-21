@@ -1,16 +1,16 @@
 /* Base styles */
 :root {
-    --primary-color: #009988; /* Changed to requested green accent */
-    --primary-dark: #007766; /* Darker shade of the accent color */
-    --secondary-color: #009988; /* Changed to match accent */
-    --accent-color: #009988; /* Changed to match accent */
-    --light-bg: #1a1a1a; /* Darker shade for light backgrounds */
-    --dark-bg: #000000; /* Pure black for dark backgrounds */
-    --text-color: #ffffff; /* White text */
-    --text-light: #cccccc; /* Light gray for secondary text */
-    --text-white: #ffffff; /* White text */
-    --border-color: #333333; /* Dark gray for borders */
-    --success-color: #009988; /* Changed to match accent */
+    --primary-color: #009988;
+    --primary-dark: #007766;
+    --secondary-color: #009988;
+    --accent-color: #009988;
+    --light-bg: #1a1a1a;
+    --dark-bg: #000000;
+    --text-color: #ffffff;
+    --text-light: #cccccc;
+    --text-white: #ffffff;
+    --border-color: #333333;
+    --success-color: #009988;
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
     --shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
@@ -29,12 +29,12 @@ html, body {
 }
 
 body {
-    font-family: 'Courier New', monospace; /* Changed to terminal-like font */
+    font-family: 'Courier New', monospace;
     line-height: 1.6;
     margin: 0;
     padding: 0;
     color: var(--text-color);
-    background-color: var(--dark-bg); /* Changed to black background */
+    background-color: var(--dark-bg);
     font-size: 16px;
     display: flex;
     flex-direction: column;
@@ -45,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 0.5em;
-    color: var(--text-white); /* Changed to white */
+    color: var(--text-white);
 }
 
 h1 {
@@ -65,7 +65,7 @@ p {
 }
 
 a {
-    color: var(--primary-color); /* Changed to green accent */
+    color: var(--primary-color);
     text-decoration: none;
     transition: var(--transition);
 }
@@ -84,7 +84,7 @@ a:hover {
 
 /* Header and Navigation */
 header {
-    background-color: var(--dark-bg); /* Changed to black */
+    background-color: var(--dark-bg);
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
@@ -142,13 +142,13 @@ nav a:hover::after {
     text-align: center;
     margin: 1rem 0;
     font-size: 3rem;
-    color: var(--primary-color); /* Changed to green accent */
+    color: var(--primary-color);
     letter-spacing: -0.5px;
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%); /* Changed to black gradient */
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     color: var(--text-white);
     padding: 5rem 2rem;
     text-align: center;
@@ -157,7 +157,7 @@ nav a:hover::after {
     margin-bottom: 3rem;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     box-shadow: var(--shadow-lg);
-    border: 1px solid var(--primary-color); /* Added green border */
+    border: 1px solid var(--primary-color);
 }
 
 .hero-section::before {
@@ -207,8 +207,8 @@ nav a:hover::after {
 
 .cta-button {
     display: inline-block;
-    background-color: var(--primary-color); /* Changed to green */
-    color: var(--dark-bg); /* Changed to black */
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
     font-weight: 600;
     padding: 0.75rem 2rem;
     border-radius: 50px;
@@ -220,26 +220,26 @@ nav a:hover::after {
 
 .cta-button:hover {
     background-color: transparent;
-    color: var(--primary-color); /* Changed to green */
-    border-color: var(--primary-color); /* Changed to green */
+    color: var(--primary-color);
+    border-color: var(--primary-color);
     transform: translateY(-3px);
 }
 
 .cta-contact {
-    background-color: var(--dark-bg); /* Changed to black */
-    color: var(--primary-color); /* Changed to green */
-    border: 2px solid var(--primary-color); /* Added green border */
+    background-color: var(--dark-bg);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
 .cta-contact:hover {
-    background-color: var(--primary-color); /* Changed to green */
-    color: var(--dark-bg); /* Changed to black */
-    border-color: var(--primary-color); /* Changed to green */
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+    border-color: var(--primary-color);
 }
 
 /* Recent Posts Section */
 .recent-posts-section {
-    background-color: var(--light-bg); /* Changed to darker shade */
+    background-color: var(--light-bg);
     padding: 4rem 0;
     text-align: center;
     margin-top: 3rem;
@@ -250,7 +250,7 @@ nav a:hover::after {
     display: inline-block;
     margin-top: 1.5rem;
     font-weight: 600;
-    color: var(--primary-color); /* Changed to green */
+    color: var(--primary-color);
     transition: var(--transition);
 }
 
@@ -268,7 +268,7 @@ nav a:hover::after {
 }
 
 .blog-post {
-    background: var(--dark-bg); /* Changed to black */
+    background: var(--dark-bg);
     padding: 1.5rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
@@ -280,7 +280,7 @@ nav a:hover::after {
 .blog-post:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--primary-color); /* Changed to green */
+    border-color: var(--primary-color);
 }
 
 .blog-post h3 {
@@ -288,7 +288,7 @@ nav a:hover::after {
 }
 
 .blog-post a {
-    color: var(--primary-color); /* Changed to green */
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -331,7 +331,7 @@ main {
 
 /* Markdown content styling */
 #content h1 {
-    color: var(--primary-color); /* Changed to green */
+    color: var(--primary-color);
     margin-bottom: 1.5rem;
 }
 
@@ -346,7 +346,7 @@ main {
     position: absolute;
     width: 40px;
     height: 3px;
-    background-color: var(--primary-color); /* Changed to green */
+    background-color: var(--primary-color);
     bottom: -10px;
     left: 0;
 }
@@ -378,7 +378,7 @@ ul {
 }
 
 .tech-list li {
-    background-color: var(--light-bg); /* Changed to darker shade */
+    background-color: var(--light-bg);
     padding: 1rem 1.5rem;
     border-radius: var(--border-radius);
     display: flex;
@@ -387,13 +387,13 @@ ul {
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     text-align: left;
-    border-left: 3px solid var(--primary-color); /* Added green border */
+    border-left: 3px solid var(--primary-color);
 }
 
 .tech-list li:hover {
     transform: translateX(5px);
     box-shadow: var(--shadow-md);
-    background-color: rgba(0, 153, 136, 0.1); /* Changed to green with opacity */
+    background-color: rgba(0, 153, 136, 0.1);
 }
 
 .tech-icon {
@@ -405,13 +405,13 @@ ul {
 }
 
 #content a {
-    color: var(--primary-color); /* Changed to green */
+    color: var(--primary-color);
     text-decoration: none;
-    border-bottom: 1px dotted var(--primary-color); /* Changed to green */
+    border-bottom: 1px dotted var(--primary-color);
 }
 
 #content a:hover {
-    border-bottom: 1px solid var(--primary-color); /* Changed to green */
+    border-bottom: 1px solid var(--primary-color);
 }
 
 #content p {
@@ -420,20 +420,20 @@ ul {
 
 /* Code blocks */
 pre {
-    background-color: var(--light-bg); /* Changed to darker shade */
+    background-color: var(--light-bg);
     color: var(--text-white);
     padding: 1.5em;
     overflow-x: auto;
     border-radius: var(--border-radius);
     margin: 1.5rem 0;
-    border-left: 3px solid var(--primary-color); /* Added green border */
+    border-left: 3px solid var(--primary-color);
 }
 
 code {
-    background-color: rgba(0, 153, 136, 0.1); /* Changed to green with opacity */
+    background-color: rgba(0, 153, 136, 0.1);
     padding: 0.2em 0.4em;
     border-radius: 3px;
-    font-family: 'Courier New', monospace; /* Changed to terminal-like font */
+    font-family: 'Courier New', monospace;
     font-size: 0.9em;
 }
 
@@ -445,23 +445,23 @@ pre code {
 }
 
 blockquote {
-    border-left: 4px solid var(--primary-color); /* Changed to green */
+    border-left: 4px solid var(--primary-color);
     padding: 1em 1.5em;
     margin: 1.5rem 0;
-    background-color: rgba(0, 153, 136, 0.05); /* Changed to green with opacity */
+    background-color: rgba(0, 153, 136, 0.05);
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 /* Footer */
 footer {
-    background-color: var(--dark-bg); /* Changed to black */
+    background-color: var(--dark-bg);
     color: var(--text-white);
     padding: 2rem 0;
     text-align: center;
     margin-top: 4rem;
     flex-shrink: 0; /* Prevents the footer from shrinking */
     width: 100%;
-    border-top: 1px solid var(--primary-color); /* Added green border */
+    border-top: 1px solid var(--primary-color);
 }
 
 footer p {
@@ -574,4 +574,4 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
-}
+}      
