@@ -10,68 +10,69 @@
    - Verify that all source attributions are present and accurate
    - Include SEO keywords following the guidelines in `seo-optimization.md`
 
-2. **HTML Fragment Creation**
-   - Create the blog post as an HTML fragment in `/public/html/fragments/blog/{slug}.html`
-   - The slug should be a URL-friendly version of the title (e.g., `understanding-ai.html`)
-   - HTML fragment must follow the established format with proper article structure
+2. **Draft Content Location**
+   - All blog drafts MUST be stored in `/content/blog/drafts/` directory
+   - Use a descriptive filename with a `.md` extension (e.g., `understanding-ai-draft.md`)
+   - Include complete frontmatter as specified in the SEO guidelines
+   - Keep all drafts in this location until they are ready for publication
 
-3. **Update Blog Listing**
-   - Add the new blog post to `/public/html/fragments/blog-list.html`
-   - Follow the existing format for blog post entries
-   - Ensure the post metadata (date, tags) matches the blog post fragment
-   - Place newer posts above older ones to maintain chronological order
+3. **Final Publication Process**
+   - Once a draft is finalized and approved, move it to `/src/content/blog/` directory
+   - Use a clean, SEO-friendly filename (e.g., `understanding-ai.md`)
+   - Ensure all frontmatter is correctly formatted and complete
+   - IMPORTANT: Only content in `/src/content/blog/` will be published to the website
+   - Never place draft content directly in the publishing directory
 
-4. **HTML Fragment Structure**
-   - Each blog post HTML fragment should follow this structure:
-   ```html
-   <article class="full-blog-post">
-       <h1>Post Title</h1>
-       
-       <div class="post-meta">
-           <span class="post-date">Posted on: YYYY-MM-DD</span>
-           <span class="post-tags">Tags: tag1, tag2, tag3</span>
-           <span class="post-author">By: Author Name</span>
-           <span class="post-keywords">Keywords: primary-keyword, secondary-keyword-1, secondary-keyword-2</span>
-       </div>
-       
-       <!-- Post content here -->
-       
-       <div class="post-navigation">
-           <a href="/blog">← Back to all posts</a>
-       </div>
-   </article>
+4. **Frontmatter Structure**
+   - Each blog post must include the following frontmatter:
+   ```markdown
+   ---
+   title: "Post Title"
+   pubDate: YYYY-MM-DD
+   description: "A compelling description of the post content"
+   tags: ["tag1", "tag2", "tag3"]
+   keywords: ["primary-keyword", "secondary-keyword-1", "secondary-keyword-2"]
+   author: "Author Name"
+   ---
    ```
 
 5. **Building the Site**
-   - Run `bun build` to generate the static site
-   - This will create a complete HTML page for your blog post at `dist/blog/post/{slug}.html`
+   - Run `npm run build` to generate the static site
+   - This will process all blog posts in the `/src/content/blog/` directory
    - The build process:
-     - Extracts the title and description from your fragment
-     - Creates a full HTML page with navigation and footer
-     - Processes all include directives
+     - Creates pages based on the Astro content collection
+     - Processes frontmatter and markdown content
+     - Applies the BlogPost layout to each post
 
 6. **Quality Control**
-   - Keep a backup copy of your HTML fragment before publishing
-   - Verify that the generated HTML page renders correctly
-   - Check that navigation links work properly
-   - Ensure all images and references are accessible
+   - Always preview the site before final deployment
+   - Verify that the generated blog post renders correctly
+   - Check that all links, images, and embedded content work properly
+   - Ensure metadata appears correctly in the page source
 
-## Static Site Generation Process
+## Content Location Guidelines
 
-When you run `bun build`:
+To maintain a clean workflow:
 
-1. The build script reads all blog post fragments from `/public/html/fragments/blog/`
-2. For each fragment, it:
-   - Extracts the title from the `<h1>` tag
-   - Gets a description from the first paragraph
-   - Inserts the fragment content into the blog post template
-   - Processes any include directives (like including navigation and footer)
-   - Writes the complete HTML file to `dist/blog/post/{slug}.html`
+1. **Draft Content**
+   - Location: `/content/blog/drafts/`
+   - Purpose: Work-in-progress content not ready for public viewing
+   - Access: Available for review but never published to the site
+
+2. **Published Content**
+   - Location: `/src/content/blog/`
+   - Purpose: Finalized content ready for public consumption
+   - Access: Processed by Astro and published to the website
+
+3. **Never Publish Drafts**
+   - Content in `/content/blog/drafts/` is intentionally excluded from the build process
+   - Moving a file from drafts to the publishing directory is a deliberate step
+   - This separation ensures only polished content reaches the public site
 
 ## Common Pitfalls to Avoid
 
-- Don't forget to run `bun build` after creating or updating a blog post
-- Make sure your HTML fragment follows the established structure
-- Ensure the HTML uses proper heading hierarchy (h1, h2, h3)
-- Keep all navigation links as regular `<a href="/path">` links, not HTMX attributes
-- Verify that the generated HTML looks correct by checking the file in `dist/blog/post/`     
+- Don't place draft content directly in `/src/content/blog/`
+- Always run a build and preview before final deployment
+- Ensure frontmatter is complete before moving to the publishing directory
+- Keep file paths consistent with the established structure
+- Verify that images referenced in content are properly accessible from the published location     

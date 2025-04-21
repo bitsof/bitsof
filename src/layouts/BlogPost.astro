@@ -4,15 +4,27 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { generateArticleSchema } from '../utils/seo';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, keywords, author } = Astro.props;
+
+// Generate JSON-LD schema for the blog post
+const articleSchema = generateArticleSchema({
+	title,
+	description,
+	publishDate: pubDate,
+	updateDate: updatedDate,
+	authorName: author,
+	image: heroImage,
+	url: Astro.url
+});
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} image={heroImage} keywords={keywords} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -52,6 +64,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				font-style: italic;
 			}
 		</style>
+		<!-- Structured Data / JSON-LD -->
+		<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 	</head>
 
 	<body>

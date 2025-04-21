@@ -27,6 +27,22 @@
 * **Volume vs. Competition:** Balance between search popularity and ranking difficulty
 * **Business Value:** Will ranking for this term drive valuable traffic?
 
+## Content Locations and Workflow
+
+### Draft Content
+* **Location:** All draft blog posts should be placed in `/content/blog/drafts/`
+* **Status:** Drafts are not published to the website
+* **SEO Implementation:** Include all SEO elements in drafts to prepare for final publication
+* **Naming Convention:** Use descriptive filenames (e.g., `ai-collaboration-draft.md`)
+
+### Published Content
+* **Location:** Finalized blog posts must be moved to `/src/content/blog/`
+* **Important:** Only content in this directory will be processed and published
+* **Transition Process:** 
+  - Verify all SEO elements are properly implemented
+  - Ensure keyword optimization is complete
+  - Move the file (do not copy) to maintain a single source of truth
+
 ## Implementing Keywords in Astro Blog Posts
 
 ### Frontmatter Configuration
@@ -135,6 +151,30 @@ Astro includes built-in RSS feed generation, which can help distribute your cont
 ### OpenGraph and Twitter Cards
 Astro's BaseHead component includes OpenGraph and Twitter Card meta tags, which improve how your content appears when shared on social media.
 
+## SEO Review Before Publication
+
+Before moving content from `/content/blog/drafts/` to `/src/content/blog/`, perform this SEO review:
+
+1. **Keyword Implementation Check:**
+   - Verify that the primary keyword appears in the title, first paragraph, and at least one heading
+   - Confirm that secondary keywords are distributed naturally throughout the content
+   - Check that keyword density is appropriate (not too sparse or dense)
+
+2. **Metadata Validation:**
+   - Confirm that title and meta description are optimal lengths
+   - Ensure that keywords array in frontmatter reflects the actual content
+   - Verify that tags are relevant and consistent with site taxonomy
+
+3. **Technical SEO Elements:**
+   - Check that all images have alt text
+   - Ensure links have descriptive anchor text
+   - Verify proper heading hierarchy (h1, h2, h3, etc.)
+
+4. **Content Quality Assessment:**
+   - Confirm content provides value related to the target keywords
+   - Check that content length is appropriate for the topic (typically 1000+ words for competitive terms)
+   - Ensure readability is appropriate for the target audience
+
 ## DO's and DON'Ts
 
 ### DO:
@@ -150,6 +190,7 @@ Astro's BaseHead component includes OpenGraph and Twitter Card meta tags, which 
 * Target irrelevant keywords just because they have high volume
 * Sacrifice readability for keyword placement
 * Use the exact same keywords across multiple posts (keyword cannibalization)
+* Place draft content directly in the publication directory (`/src/content/blog/`)
 
 ## Monitoring and Improvement
 
