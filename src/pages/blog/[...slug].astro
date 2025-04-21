@@ -6,10 +6,13 @@ import { SITE_TITLE } from '../../consts';
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	
-	return posts.map(post => ({
-		params: { slug: post.slug },
-		props: { post },
-	}));
+	return posts.map(post => {
+		// Using post.id directly as the slug parameter
+		return {
+			params: { slug: post.id },
+			props: { post },
+		};
+	});
 }
 
 const { post } = Astro.props;
