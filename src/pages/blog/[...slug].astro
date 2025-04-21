@@ -6,13 +6,10 @@ import { SITE_TITLE } from '../../consts';
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	
-	return posts.map(post => {
-		const slug = post.id.split('/').pop().replace(/\.mdx?$/, '');
-		return {
-			params: { slug: slug },
-			props: { post },
-		};
-	});
+	return posts.map(post => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
 }
 
 const { post } = Astro.props;
