@@ -1,19 +1,19 @@
 /* Base styles */
 :root {
-    --primary-color: #3a86ff;
-    --primary-dark: #2667cc;
-    --secondary-color: #ff006e;
-    --accent-color: #8338ec;
-    --light-bg: #f8f9fa;
-    --dark-bg: #212529;
-    --text-color: #333;
-    --text-light: #6c757d;
-    --text-white: #fff;
-    --border-color: #dee2e6;
-    --success-color: #38b000;
-    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --primary-color: #009988; /* Changed to requested green accent */
+    --primary-dark: #007766; /* Darker shade of the accent color */
+    --secondary-color: #009988; /* Changed to match accent */
+    --accent-color: #009988; /* Changed to match accent */
+    --light-bg: #1a1a1a; /* Darker shade for light backgrounds */
+    --dark-bg: #000000; /* Pure black for dark backgrounds */
+    --text-color: #ffffff; /* White text */
+    --text-light: #cccccc; /* Light gray for secondary text */
+    --text-white: #ffffff; /* White text */
+    --border-color: #333333; /* Dark gray for borders */
+    --success-color: #009988; /* Changed to match accent */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
     --transition: all 0.3s ease;
     --border-radius: 8px;
 }
@@ -29,12 +29,12 @@ html, body {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'Courier New', monospace; /* Changed to terminal-like font */
     line-height: 1.6;
     margin: 0;
     padding: 0;
     color: var(--text-color);
-    background-color: #fff;
+    background-color: var(--dark-bg); /* Changed to black background */
     font-size: 16px;
     display: flex;
     flex-direction: column;
@@ -45,7 +45,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 0.5em;
-    color: var(--dark-bg);
+    color: var(--text-white); /* Changed to white */
 }
 
 h1 {
@@ -65,7 +65,7 @@ p {
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Changed to green accent */
     text-decoration: none;
     transition: var(--transition);
 }
@@ -84,7 +84,7 @@ a:hover {
 
 /* Header and Navigation */
 header {
-    background-color: #fff;
+    background-color: var(--dark-bg); /* Changed to black */
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
@@ -142,13 +142,13 @@ nav a:hover::after {
     text-align: center;
     margin: 1rem 0;
     font-size: 3rem;
-    color: var(--primary-color);
+    color: var(--primary-color); /* Changed to green accent */
     letter-spacing: -0.5px;
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%); /* Changed to black gradient */
     color: var(--text-white);
     padding: 5rem 2rem;
     text-align: center;
@@ -157,6 +157,7 @@ nav a:hover::after {
     margin-bottom: 3rem;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     box-shadow: var(--shadow-lg);
+    border: 1px solid var(--primary-color); /* Added green border */
 }
 
 .hero-section::before {
@@ -166,7 +167,7 @@ nav a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23ffffff" fill-opacity="0.1" d="M0,160L48,181.3C96,203,192,245,288,229.3C384,213,480,139,576,117.3C672,96,768,128,864,160C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E');
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23009988" fill-opacity="0.1" d="M0,160L48,181.3C96,203,192,245,288,229.3C384,213,480,139,576,117.3C672,96,768,128,864,160C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E');
     background-size: cover;
     background-position: center;
     opacity: 0.2;
@@ -206,8 +207,8 @@ nav a:hover::after {
 
 .cta-button {
     display: inline-block;
-    background-color: var(--text-white);
-    color: var(--primary-color);
+    background-color: var(--primary-color); /* Changed to green */
+    color: var(--dark-bg); /* Changed to black */
     font-weight: 600;
     padding: 0.75rem 2rem;
     border-radius: 50px;
@@ -219,92 +220,26 @@ nav a:hover::after {
 
 .cta-button:hover {
     background-color: transparent;
-    color: var(--text-white);
-    border-color: var(--text-white);
+    color: var(--primary-color); /* Changed to green */
+    border-color: var(--primary-color); /* Changed to green */
     transform: translateY(-3px);
 }
 
 .cta-contact {
-    background-color: var(--secondary-color);
-    color: var(--text-white);
+    background-color: var(--dark-bg); /* Changed to black */
+    color: var(--primary-color); /* Changed to green */
+    border: 2px solid var(--primary-color); /* Added green border */
 }
 
 .cta-contact:hover {
-    background-color: transparent;
-    border-color: var(--secondary-color);
-}
-
-/* Services Section */
-.services-section {
-    padding: 4rem 0;
-    text-align: center;
-}
-
-.services-section h2, .technologies-section h2 {
-    margin-bottom: 3rem;
-    position: relative;
-    display: inline-block;
-}
-
-.services-section h2::after, .technologies-section h2::after {
-    content: '';
-    position: absolute;
-    width: 50px;
-    height: 3px;
-    background-color: var(--primary-color);
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.service-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.service-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-}
-
-.service-card {
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    border: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-color);
-}
-
-.service-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    line-height: 1;
-}
-
-.service-card h3 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
+    background-color: var(--primary-color); /* Changed to green */
+    color: var(--dark-bg); /* Changed to black */
+    border-color: var(--primary-color); /* Changed to green */
 }
 
 /* Recent Posts Section */
 .recent-posts-section {
-    background-color: var(--light-bg);
+    background-color: var(--light-bg); /* Changed to darker shade */
     padding: 4rem 0;
     text-align: center;
     margin-top: 3rem;
@@ -315,7 +250,7 @@ nav a:hover::after {
     display: inline-block;
     margin-top: 1.5rem;
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--primary-color); /* Changed to green */
     transition: var(--transition);
 }
 
@@ -333,7 +268,7 @@ nav a:hover::after {
 }
 
 .blog-post {
-    background: white;
+    background: var(--dark-bg); /* Changed to black */
     padding: 1.5rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
@@ -345,7 +280,7 @@ nav a:hover::after {
 .blog-post:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--primary-color);
+    border-color: var(--primary-color); /* Changed to green */
 }
 
 .blog-post h3 {
@@ -353,7 +288,7 @@ nav a:hover::after {
 }
 
 .blog-post a {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Changed to green */
     text-decoration: none;
 }
 
@@ -396,7 +331,7 @@ main {
 
 /* Markdown content styling */
 #content h1 {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Changed to green */
     margin-bottom: 1.5rem;
 }
 
@@ -411,7 +346,7 @@ main {
     position: absolute;
     width: 40px;
     height: 3px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color); /* Changed to green */
     bottom: -10px;
     left: 0;
 }
@@ -443,7 +378,7 @@ ul {
 }
 
 .tech-list li {
-    background-color: var(--light-bg);
+    background-color: var(--light-bg); /* Changed to darker shade */
     padding: 1rem 1.5rem;
     border-radius: var(--border-radius);
     display: flex;
@@ -452,12 +387,13 @@ ul {
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     text-align: left;
+    border-left: 3px solid var(--primary-color); /* Added green border */
 }
 
 .tech-list li:hover {
     transform: translateX(5px);
     box-shadow: var(--shadow-md);
-    background-color: rgba(58, 134, 255, 0.05);
+    background-color: rgba(0, 153, 136, 0.1); /* Changed to green with opacity */
 }
 
 .tech-icon {
@@ -469,13 +405,13 @@ ul {
 }
 
 #content a {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Changed to green */
     text-decoration: none;
-    border-bottom: 1px dotted var(--primary-color);
+    border-bottom: 1px dotted var(--primary-color); /* Changed to green */
 }
 
 #content a:hover {
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--primary-color); /* Changed to green */
 }
 
 #content p {
@@ -484,19 +420,20 @@ ul {
 
 /* Code blocks */
 pre {
-    background-color: var(--dark-bg);
+    background-color: var(--light-bg); /* Changed to darker shade */
     color: var(--text-white);
     padding: 1.5em;
     overflow-x: auto;
     border-radius: var(--border-radius);
     margin: 1.5rem 0;
+    border-left: 3px solid var(--primary-color); /* Added green border */
 }
 
 code {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 153, 136, 0.1); /* Changed to green with opacity */
     padding: 0.2em 0.4em;
     border-radius: 3px;
-    font-family: 'Fira Code', monospace;
+    font-family: 'Courier New', monospace; /* Changed to terminal-like font */
     font-size: 0.9em;
 }
 
@@ -508,26 +445,64 @@ pre code {
 }
 
 blockquote {
-    border-left: 4px solid var(--primary-color);
+    border-left: 4px solid var(--primary-color); /* Changed to green */
     padding: 1em 1.5em;
     margin: 1.5rem 0;
-    background-color: rgba(0,0,0,0.02);
+    background-color: rgba(0, 153, 136, 0.05); /* Changed to green with opacity */
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 /* Footer */
 footer {
-    background-color: var(--dark-bg);
+    background-color: var(--dark-bg); /* Changed to black */
     color: var(--text-white);
     padding: 2rem 0;
     text-align: center;
     margin-top: 4rem;
     flex-shrink: 0; /* Prevents the footer from shrinking */
     width: 100%;
+    border-top: 1px solid var(--primary-color); /* Added green border */
 }
 
 footer p {
     margin: 0;
+}
+
+/* Matrix-like animation effect */
+@keyframes matrix-fall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.hero-section::after {
+    content: '01001010 10101010 01010101 10101010';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+    animation: matrix-fall 10s linear infinite;
+    text-align: left;
+    overflow: hidden;
+    line-height: 1.2;
 }
 
 /* Responsive design */
@@ -572,7 +547,6 @@ footer p {
         gap: 1rem;
     }
     
-    .services-section,
     .recent-posts-section,
     .technologies-section {
         padding: 3rem 1rem;
@@ -600,4 +574,4 @@ footer p {
     .hero-section {
         padding: 2.5rem 1rem;
     }
-} 
+}
