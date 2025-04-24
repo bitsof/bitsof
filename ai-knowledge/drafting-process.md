@@ -21,6 +21,8 @@
    - Use a clean, SEO-friendly filename (e.g., `understanding-ai.md`)
    - Ensure all frontmatter is correctly formatted and complete
    - IMPORTANT: Only content in `/src/content/blog/` will be published to the website
+   - Simply placing the final markdown file in this directory is sufficient for publication
+   - **NO BUILD STEP REQUIRED**: Once the file is placed in `/src/content/blog/`, it will automatically be included in the site - no manual build or deployment step is needed
    - Never place draft content directly in the publishing directory
 
 4. **Frontmatter Structure**
@@ -33,22 +35,18 @@
    tags: ["tag1", "tag2", "tag3"]
    keywords: ["primary-keyword", "secondary-keyword-1", "secondary-keyword-2"]
    author: "Author Name"
+   image: {
+     url: "/images/image-name.jpg",
+     alt: "Descriptive alt text for the image"
+   }
    ---
    ```
 
-5. **Building the Site**
-   - Run `npm run build` to generate the static site
-   - This will process all blog posts in the `/src/content/blog/` directory
-   - The build process:
-     - Creates pages based on the Astro content collection
-     - Processes frontmatter and markdown content
-     - Applies the BlogPost layout to each post
-
-6. **Quality Control**
-   - Always preview the site before final deployment
-   - Verify that the generated blog post renders correctly
-   - Check that all links, images, and embedded content work properly
-   - Ensure metadata appears correctly in the page source
+5. **Quality Control**
+   - Verify that the blog post content and formatting is correct
+   - Check that all links, images, and embedded content references are accurate
+   - Ensure metadata in the frontmatter is complete and correctly formatted
+   - Confirm all referenced images exist in the proper location
 
 ## Content Location Guidelines
 
@@ -62,17 +60,17 @@ To maintain a clean workflow:
 2. **Published Content**
    - Location: `/src/content/blog/`
    - Purpose: Finalized content ready for public consumption
-   - Access: Processed by Astro and published to the website
+   - Access: Automatically processed by Astro and published to the website
+   - **Note**: No additional build or deployment step is needed - adding files to this directory is all that's required for publication
 
 3. **Never Publish Drafts**
-   - Content in `/content/blog/drafts/` is intentionally excluded from the build process
+   - Content in `/content/blog/drafts/` is intentionally excluded from publication
    - Moving a file from drafts to the publishing directory is a deliberate step
    - This separation ensures only polished content reaches the public site
 
 ## Common Pitfalls to Avoid
 
 - Don't place draft content directly in `/src/content/blog/`
-- Always run a build and preview before final deployment
 - Ensure frontmatter is complete before moving to the publishing directory
 - Keep file paths consistent with the established structure
-- Verify that images referenced in content are properly accessible from the published location     
+- Verify that images referenced in content exist and are properly accessible from the published location     
