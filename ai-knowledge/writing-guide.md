@@ -42,9 +42,9 @@
 
 **Project File Structure:**
 - Draft content is stored in: `/content/blog/drafts/{topic-name}/`
-- Final markdown is stored in: `/content/blog/posts/{topic-name}.md`
-- HTML fragments are generated to: `/public/html/fragments/blog/{slug}.html`
-- Blog metadata is extracted from the HTML fragments during the build process.
+- Final markdown is stored in: `/src/content/blog/{topic-name}.md`
+- Images should be placed in: `/public/images/`
+- Astro automatically processes content in the `/src/content/blog/` directory
 
 **Mandatory AI-Collaborative Writing Process:**
 
@@ -105,12 +105,11 @@
 *   **Output:** `final.md` (The finalized, publish-ready article content, copied/renamed from the human-approved polished draft).
 
 **Phase 5: Publication Process**
-*   **Goal:** Convert final markdown to HTML fragment and prepare for website build.
+*   **Goal:** Move the final markdown to the appropriate location for publication.
 *   **Input:** `final.md` from drafts folder
 *   **Collaborative Actions:**
-    1. Move the final markdown to `/content/blog/posts/{topic-name}.md`
-    2. Convert markdown to HTML format following the template in `drafting-process.md`, ensuring necessary metadata (title, date, tags, etc.) is included within the HTML structure.
-    3. Save the HTML fragment to `/public/html/fragments/blog/{slug}.html`
-    4. Run `bun build` to generate the final site. The build process extracts metadata from the fragment and creates the full post page.
-    5. Test the published post by viewing the generated file in the `dist` directory or running a local server to ensure proper rendering and navigation.
-*   **Output:** Generated blog post page in the `dist` directory, ready for deployment.     
+    1. Copy the final markdown to `/src/content/blog/{topic-name}.md`
+    2. Ensure any referenced images are properly placed in `/public/images/`
+    3. Verify the frontmatter is complete with all required metadata (title, description, date, tags, keywords, author, image)
+    4. Double-check all image references and links
+*   **Output:** Published blog post, ready for viewing on the website.     
