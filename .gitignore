@@ -25,5 +25,4 @@ pnpm-debug.log*
 
 mcp.json
 .vscode/
-tasks/
 .shortest/
