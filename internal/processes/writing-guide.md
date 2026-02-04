@@ -41,7 +41,7 @@
 - Content should follow established style guidelines
 
 **Project File Structure:**
-- Draft content is stored in: `/content/blog/drafts/{topic-name}/`
+- Draft content is stored in: `/internal/drafts/blog/{topic-name}/`
 - Final markdown is stored in: `/src/content/blog/{topic-name}.md`
 - Images should be placed in: `/public/images/`
 - Astro automatically processes content in the `/src/content/blog/` directory

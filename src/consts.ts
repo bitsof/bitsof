@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = 'BitsOf';
 export const SITE_DESCRIPTION = 'BitsOf provides AI-powered solutions to help businesses streamline operations and unlock innovation.';
-export const SITE_URL = 'https://bitsof.ai';
+export const SITE_URL = 'https://bitsof.vercel.app';

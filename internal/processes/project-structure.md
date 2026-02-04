@@ -35,8 +35,8 @@ Focuses on: Generative AI, Agentic LLMs, Tool Calling, Zapier/N8N automation.
 
 ## Blog Publishing Workflow
 
-*   **Content Creation:** Blog posts are written as Markdown files with frontmatter in `/content/blog/drafts/`
+*   **Content Creation:** Blog posts are written as Markdown files with frontmatter in `/internal/drafts/blog/`
 *   **Publication Process:** Final approved content is moved to `/src/content/blog/` (example: `openai-models-explained.md`)
 *   **Automatic Processing:** Content in `/src/content/blog/` is automatically processed by Astro - no build step required
-*   **Process:** Follows best practices detailed in **`ai-knowledge/drafting-process.md`**
-*   **Standards:** Adheres to principles in **`ai-knowledge/writing-guide.md`** 
+*   **Process:** Follows best practices detailed in **`internal/processes/drafting-process.md`**
+*   **Standards:** Adheres to principles in **`internal/processes/writing-guide.md`** 

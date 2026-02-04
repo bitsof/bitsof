@@ -30,7 +30,7 @@
 ## Content Locations and Workflow
 
 ### Draft Content
-* **Location:** All draft blog posts should be placed in `/content/blog/drafts/`
+* **Location:** All draft blog posts should be placed in `/internal/drafts/blog/`
 * **Status:** Drafts are not published to the website
 * **SEO Implementation:** Include all SEO elements in drafts to prepare for final publication
 * **Naming Convention:** Use descriptive filenames (e.g., `ai-collaboration-draft.md`)
@@ -153,7 +153,7 @@ Astro's BaseHead component includes OpenGraph and Twitter Card meta tags, which 
 
 ## SEO Review Before Publication
 
-Before moving content from `/content/blog/drafts/` to `/src/content/blog/`, perform this SEO review:
+Before moving content from `/internal/drafts/blog/` to `/src/content/blog/`, perform this SEO review:
 
 1. **Keyword Implementation Check:**
    - Verify that the primary keyword appears in the title, first paragraph, and at least one heading
