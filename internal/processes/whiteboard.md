@@ -25,7 +25,7 @@
 ============ WRITE MEMORY BELOW HERE ================
 
 - [2024-03-30T00:00:00Z] Description: Blog Post Workflow Update. Payload:
-    * Draft posts are stored in `/content/blog/drafts/{topic-name}/`
+    * Draft posts are stored in `/internal/drafts/blog/{topic-name}/`
     * Final markdown goes to `/content/blog/posts/{topic-name}.md`
     * HTML fragments are generated at `/public/html/fragments/blog/{slug}.html`
     * Metadata must be added to `/public/data/blog-posts.json`

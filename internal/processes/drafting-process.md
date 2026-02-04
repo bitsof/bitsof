@@ -11,7 +11,7 @@
    - Include SEO keywords following the guidelines in `seo-optimization.md`
 
 2. **Draft Content Location**
-   - All blog drafts MUST be stored in `/content/blog/drafts/` directory
+   - All blog drafts MUST be stored in `/internal/drafts/blog/` directory
    - Use a descriptive filename with a `.md` extension (e.g., `understanding-ai-draft.md`)
    - Include complete frontmatter as specified in the SEO guidelines
    - Keep all drafts in this location until they are ready for publication
@@ -53,7 +53,7 @@
 To maintain a clean workflow:
 
 1. **Draft Content**
-   - Location: `/content/blog/drafts/`
+   - Location: `/internal/drafts/blog/`
    - Purpose: Work-in-progress content not ready for public viewing
    - Access: Available for review but never published to the site
 
@@ -64,7 +64,7 @@ To maintain a clean workflow:
    - **Note**: No additional build or deployment step is needed - adding files to this directory is all that's required for publication
 
 3. **Never Publish Drafts**
-   - Content in `/content/blog/drafts/` is intentionally excluded from publication
+   - Content in `/internal/drafts/blog/` is intentionally excluded from publication
    - Moving a file from drafts to the publishing directory is a deliberate step
    - This separation ensures only polished content reaches the public site
 
