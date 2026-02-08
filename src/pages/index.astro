@@ -1,63 +1,400 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+	.filter(post => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 6);
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<h1 class="site-title">BitsOf</h1>
+	<div class="page-layout">
+		<aside class="business-card">
+			<div class="card-content">
+				<h2>BitsOf</h2>
+				<p class="tagline">We build digital products that matter.</p>
+				<p class="description">Development services encompassing App/Web Development, Tooling, AI Business Automations, and Testing.</p>
 
-	<div class="hero-section">
-		<h2>Unlock AI's Potential for Your Business</h2>
-		<p>We share our expertise to help businesses leverage AI effectively, transforming operations and driving growth through practical, accessible solutions.</p>
-		<div class="hero-cta">
-			<a href="/about" class="cta-button">Learn More</a>
-			<a href="#contact" class="cta-button cta-contact">Contact Us</a>
-		</div>
-	</div>
+				<a href="mailto:info@bitsofllc.com" class="contact-btn">Get in touch</a>
 
-	<div class="services-section">
-		<h2>Our Services</h2>
-		
-		<div class="service-cards">
-			<div class="service-card">
-				<div class="service-icon">🎓</div>
-				<h3>AI Education</h3>
-				<p>We teach you what's available in the world of AI, helping you understand the landscape and possibilities.</p>
+				<a href="#pricing" class="pricing-btn">Starting at $5,000/month</a>
 			</div>
-			
-			<div class="service-card">
-				<div class="service-icon">🎯</div>
-				<h3>Targeted AI Solutions</h3>
-				<p>We build tailored solutions that deliver RESULTS for your specific business challenges.</p>
-			</div>
-			
-			<div class="service-card">
-				<div class="service-icon">🛠️</div>
-				<h3>Direct AI Support</h3>
-				<p>We provide ongoing assistance with your AI-related projects, ensuring continuous success.</p>
-			</div>
-			
-			<div class="service-card">
-				<div class="service-icon">🚀</div>
-				<h3>Project Delivery</h3>
-				<p>We work collaboratively to build new agentic AI products that transform your business.</p>
-			</div>
-		</div>
-		
-		<div class="technologies-section">
-			<h2>Technologies We Support</h2>
-			<ul class="tech-list">
-				<li><span class="tech-icon">🤖</span> All Major LLM models (ChatGPT, Claude, Anthropic, Grok, Ollama)</li>
-				<li><span class="tech-icon">✨</span> Generative AI solutions</li>
-				<li><span class="tech-icon">💻</span> Python, JavaScript</li>
-				<li><span class="tech-icon">⚡</span> No-Code solutions such as Make and N8N</li>
-			</ul>
-		</div>
-	</div>
+		</aside>
 
-	<div class="recent-posts-section">
-		<h2>Latest Insights</h2>
-		<p>Check out our blog for the latest insights on AI and business:</p>
-		<a href="/blog" class="blog-link">Visit Our Blog →</a>
+		<main class="main-content">
+			<section class="work-section">
+				<div class="toggle-tabs">
+					<button class="tab active" data-tab="work">Client Work</button>
+					<button class="tab" data-tab="blog">Blog</button>
+				</div>
+
+				<div class="tab-content" id="work-content">
+					<div class="work-grid">
+						<div class="work-item">
+							<div class="work-placeholder"></div>
+							<h4>Coming Soon</h4>
+							<p>Client projects will be showcased here.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-content hidden" id="blog-content">
+					<div class="blog-grid">
+						{posts.length > 0 ? (
+							posts.map(post => (
+								<a href={`/blog/${post.id}`} class="blog-item">
+									<span class="blog-date">{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+									<h4>{post.data.title}</h4>
+									<p>{post.data.description}</p>
+								</a>
+							))
+						) : (
+							<p class="no-posts">No blog posts yet.</p>
+						)}
+					</div>
+				</div>
+			</section>
+
+			<section class="pricing-section" id="pricing">
+				<h3 class="section-label">Pricing</h3>
+				<div class="pricing-grid">
+					<div class="pricing-card">
+						<h4>Basic</h4>
+						<p class="pricing-amount">$5,000<span>/month</span></p>
+						<ul class="pricing-features">
+							<li>2 updates per week</li>
+							<li>Senior Developer + Support (Previously at Playstation, Apple, 50+ projects)</li>
+							<li>Private Slack Channel</li>
+							<li>No Contracts, Cancel Anytime</li>
+							<li>Software Development (Web/App)</li>
+							<li>Tool Development</li>
+							<li>Automated Testing</li>
+						</ul>
+					</div>
+					<div class="pricing-card">
+						<h4>Pro</h4>
+						<p class="pricing-amount">$7,500<span>/month</span></p>
+						<ul class="pricing-features">
+							<li>3 updates per week</li>
+							<li>Senior Developer + Support (Previously at Playstation, Apple, 50+ projects)</li>
+							<li>Private Slack Channel</li>
+							<li>No Contracts, Cancel Anytime</li>
+							<li>Software Development (Web/App/AI)</li>
+							<li>AI Tool Development</li>
+							<li>Automated Testing</li>
+						</ul>
+					</div>
+					<div class="pricing-card">
+						<h4>Project Based</h4>
+						<p class="pricing-amount">By Feature</p>
+						<p class="pricing-desc">Priced per feature. Requires discovery phase.</p>
+						<p class="pricing-note">Starting at $3,000 for discovery, credited towards project work.</p>
+					</div>
+					<div class="pricing-card">
+						<h4>Performance Based</h4>
+						<p class="pricing-amount">By Performance</p>
+						<p class="pricing-desc">15-30% of verified savings, or 5-15% of revenue lift.</p>
+						<p class="pricing-note">$3,000 discovery required.</p>
+					</div>
+				</div>
+			</section>
+
+		</main>
 	</div>
 </MainLayout>
+
+<style>
+	.page-layout {
+		display: grid;
+		grid-template-columns: 280px 1fr;
+		gap: 2rem;
+		padding: 4rem 0;
+	}
+
+	.business-card {
+		position: sticky;
+		top: 100px;
+		height: fit-content;
+	}
+
+	.card-content {
+		padding: 2rem;
+		border: 1px solid #e5e5e5;
+		border-radius: 12px;
+	}
+
+	.card-content h2 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	.tagline {
+		font-size: 1rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: #000;
+	}
+
+	.description {
+		font-size: 0.9rem;
+		color: #8a8a8a;
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+	}
+
+	.contact-btn {
+		display: block;
+		width: 100%;
+		padding: 0.75rem 1.5rem;
+		background: #000;
+		color: #fff;
+		text-align: center;
+		text-decoration: none;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		font-weight: 500;
+		transition: all 0.2s ease;
+		margin-bottom: 0.75rem;
+	}
+
+	.contact-btn:hover {
+		background: #333;
+	}
+
+	.pricing-btn {
+		display: block;
+		width: 100%;
+		padding: 0.75rem 1.5rem;
+		background: #fff;
+		color: #000;
+		text-align: center;
+		text-decoration: none;
+		border: 1px solid #e5e5e5;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		font-weight: 500;
+		transition: all 0.2s ease;
+	}
+
+	.pricing-btn:hover {
+		border-color: #000;
+	}
+
+	.main-content {
+		min-width: 0;
+	}
+
+	.section-label {
+		font-size: 0.8rem;
+		color: #8a8a8a;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 1.5rem;
+	}
+
+	.work-section {
+		margin-bottom: 3rem;
+	}
+
+	.toggle-tabs {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.tab {
+		padding: 0.5rem 1rem;
+		border: 1px solid #e5e5e5;
+		border-radius: 100px;
+		background: #fff;
+		font-size: 0.9rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.tab:hover {
+		border-color: #000;
+	}
+
+	.tab.active {
+		background: #000;
+		color: #fff;
+		border-color: #000;
+	}
+
+	.tab-content.hidden {
+		display: none;
+	}
+
+	.work-grid, .blog-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.work-item, .blog-item {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.work-placeholder {
+		aspect-ratio: 16/10;
+		background: #f5f5f5;
+		border-radius: 8px;
+		margin-bottom: 0.75rem;
+	}
+
+	.work-item h4, .blog-item h4 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 0.25rem;
+	}
+
+	.work-item p, .blog-item p {
+		color: #8a8a8a;
+		font-size: 0.875rem;
+		margin: 0;
+	}
+
+	.blog-item {
+		display: block;
+		padding: 1.25rem;
+		border: 1px solid #e5e5e5;
+		border-radius: 8px;
+		transition: all 0.2s ease;
+	}
+
+	.blog-item:hover {
+		border-color: #000;
+	}
+
+	.blog-date {
+		font-size: 0.8rem;
+		color: #8a8a8a;
+		display: block;
+		margin-bottom: 0.5rem;
+	}
+
+	.no-posts {
+		color: #8a8a8a;
+	}
+
+	.pricing-section {
+		padding: 3rem 0;
+		border-top: 1px solid #e5e5e5;
+		margin-bottom: 3rem;
+	}
+
+	.pricing-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.pricing-card {
+		padding: 1.5rem;
+		border: 1px solid #e5e5e5;
+		border-radius: 8px;
+	}
+
+	.pricing-card h4 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+	}
+
+	.pricing-amount {
+		font-size: 1.75rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+	}
+
+	.pricing-amount span {
+		font-size: 0.9rem;
+		font-weight: 400;
+		color: #8a8a8a;
+	}
+
+	.pricing-desc {
+		font-size: 0.9rem;
+		color: #8a8a8a;
+		line-height: 1.5;
+		margin-bottom: 0;
+	}
+
+	.pricing-card .pricing-note {
+		font-size: 0.8rem;
+		color: #8a8a8a;
+		margin-top: 0.75rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid #e5e5e5;
+	}
+
+	.pricing-features {
+		list-style: none;
+		padding: 0;
+		margin: 0.75rem 0 0 0;
+	}
+
+	.pricing-features li {
+		font-size: 0.85rem;
+		color: #666;
+		padding: 0.35rem 0;
+		padding-left: 1.25rem;
+		position: relative;
+	}
+
+	.pricing-features li::before {
+		content: "✓";
+		position: absolute;
+		left: 0;
+		color: #000;
+	}
+
+	@media (max-width: 900px) {
+		.page-layout {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.business-card {
+			position: static;
+		}
+
+		.card-content {
+			padding: 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	// Tab switching
+	const tabs = document.querySelectorAll('.tab');
+	const workContent = document.getElementById('work-content');
+	const blogContent = document.getElementById('blog-content');
+
+	tabs.forEach(tab => {
+		tab.addEventListener('click', () => {
+			tabs.forEach(t => t.classList.remove('active'));
+			tab.classList.add('active');
+
+			const tabName = tab.getAttribute('data-tab');
+			if (tabName === 'work') {
+				workContent?.classList.remove('hidden');
+				blogContent?.classList.add('hidden');
+			} else {
+				workContent?.classList.add('hidden');
+				blogContent?.classList.remove('hidden');
+			}
+		});
+	});
+
+	// Smooth scroll for pricing button
+	document.querySelector('.pricing-btn')?.addEventListener('click', (e) => {
+		e.preventDefault();
+		document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+	});
+</script>
