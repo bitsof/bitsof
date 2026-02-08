@@ -3,32 +3,18 @@ const today = new Date();
 ---
 
 <footer>
-	<div class="site-footer">
-		<p>&copy; 2024 BitsOf LLC. All rights reserved.</p>
-		<div class="footer-links">
-			<a href="/privacy">Privacy Policy</a>
-			<a href="/terms">Terms of Service</a>
-		</div>
-	</div>
+	<p>&copy; {today.getFullYear()} BitsOf LLC</p>
 </footer>
 <style>
 	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+		padding: 3rem 0;
+		border-top: 1px solid #e5e5e5;
 		text-align: center;
+		color: #8a8a8a;
+		font-size: 0.9rem;
 	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-	.social-links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+
+	footer p {
+		margin: 0;
 	}
 </style>

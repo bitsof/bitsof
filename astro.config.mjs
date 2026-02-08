@@ -20,7 +20,7 @@ export default defineConfig({
   },
   // Image optimization
   image: {
-    domains: ['example.com'],
+    domains: ['bitsof.vercel.app'],
     // Optimize for better performance
     service: {
       // Optimize images uploaded to the project

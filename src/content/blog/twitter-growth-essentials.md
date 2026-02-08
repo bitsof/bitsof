@@ -11,8 +11,6 @@ image: {
 }
 ---
 
-# The 20/80 Rule for Twitter/X Growth: Focus on What Actually Works
-
 According to a 2025 study by Social Media Examiner analyzing 50,000 X accounts, just 20% of platform activities generate over 80% of follower growth and engagement. The study found that most users spend more than 70% of their time on activities that yield less than 10% of their results. Accounts that successfully identified and focused on the vital few strategies saw 5-8x faster growth than those spreading their efforts across numerous tactics.
 
 This is a classic example of the Pareto principle—commonly known as the 80/20 rule—which states that roughly 80% of effects come from 20% of causes. When applied to building a following on X, this principle reveals why some accounts grow exponentially while others remain stagnant despite constant activity.
