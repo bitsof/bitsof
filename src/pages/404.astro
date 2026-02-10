@@ -4,37 +4,12 @@ import { SITE_TITLE } from '../consts';
 ---
 
 <MainLayout title={`404: Not Found | ${SITE_TITLE}`} description="The page you were looking for could not be found.">
-  <div class="error-container">
-    <h1>404: Not found</h1>
-    <p>Sorry, the page you were looking for doesn't exist or has been moved.</p>
-    <div class="error-actions">
-      <a href="/" class="cta-button">Go Home</a>
-      <a href="/blog" class="cta-button">View Blog</a>
+  <div class="text-center py-16 max-w-3xl mx-auto">
+    <h1 class="text-5xl mb-4">404: Not found</h1>
+    <p class="text-xl mb-8">Sorry, the page you were looking for doesn't exist or has been moved.</p>
+    <div class="flex gap-4 justify-center">
+      <a href="/" class="inline-block bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-all">Go Home</a>
+      <a href="/blog" class="inline-block bg-black text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-all">View Blog</a>
     </div>
   </div>
 </MainLayout>
-
-<style>
-.error-container {
-  text-align: center;
-  padding: 4rem 1rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.error-container h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.error-container p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.error-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-</style> 
