@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import '../styles/global.css';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -25,72 +26,35 @@ const articleSchema = generateArticleSchema({
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} image={heroImage} keywords={keywords} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: var(--text-color);
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: var(--text-light);
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 		<!-- Structured Data / JSON-LD -->
 		<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 	</head>
 
-	<body>
+	<body class="bg-white pt-20">
 		<Header />
-		<main>
+		<main class="w-full px-12 max-md:px-6">
 			<article>
-				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
+				<div class="w-full">
+					{heroImage && <img width={1020} height={510} src={heroImage} alt="" class="block m-0 rounded-xl shadow-md" />}
 				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
+				<div class="max-w-3xl p-4">
+					<div class="mb-4 py-4 text-left leading-none">
+						<div class="mb-2 text-gray-500">
 							<FormattedDate date={pubDate} />
 							{
 								updatedDate && (
-									<div class="last-updated-on">
+									<div class="italic">
 										Last updated on <FormattedDate date={updatedDate} />
 									</div>
 								)
 							}
 						</div>
-						<h1>{title}</h1>
-						<hr />
+						<h1 class="m-0 mb-2">{title}</h1>
+						<hr class="border-gray-200" />
 					</div>
-					<slot />
+					<div class="prose prose-gray max-w-none">
+						<slot />
+					</div>
 				</div>
 			</article>
 		</main>
