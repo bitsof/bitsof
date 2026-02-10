@@ -26,31 +26,35 @@ const articleSchema = generateArticleSchema({
 	<head>
 		<BaseHead title={title} description={description} image={heroImage} keywords={keywords} />
 		<style>
+			body {
+				background: #fff;
+				padding-top: 80px;
+			}
 			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
+				width: 100%;
 				margin: 0;
+				padding: 0 3rem;
 			}
 			.hero-image {
 				width: 100%;
 			}
 			.hero-image img {
 				display: block;
-				margin: 0 auto;
+				margin: 0;
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
 				width: 720px;
 				max-width: calc(100% - 2em);
-				margin: auto;
+				margin: 0;
 				padding: 1em;
 				color: var(--text-color);
 			}
 			.title {
 				margin-bottom: 1em;
 				padding: 1em 0;
-				text-align: center;
+				text-align: left;
 				line-height: 1;
 			}
 			.title h1 {
