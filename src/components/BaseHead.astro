@@ -3,7 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
-import favicon from '../assets/favicon.svg';
+import favicon from '../assets/logo.png';
 
 interface Props {
 	title: string;
@@ -20,7 +20,7 @@ const { title, description, image, keywords = [] } = Astro.props;
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href={favicon.src} />
+<link rel="icon" type="image/png" href={favicon.src} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
