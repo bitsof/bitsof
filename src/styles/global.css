@@ -27,11 +27,11 @@
 
 	body {
 		font-family: 'Atkinson', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-		@apply leading-relaxed text-black flex flex-col;
+		@apply leading-relaxed text-white bg-black flex flex-col;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		@apply font-bold leading-tight mb-2 text-black;
+		@apply font-bold leading-tight mb-2 text-white;
 	}
 
 	h1 {
@@ -55,17 +55,17 @@
 	}
 
 	a {
-		@apply text-black no-underline transition-all duration-200;
+		@apply text-white no-underline transition-all duration-200;
 	}
 
 	/* Code blocks */
 	pre {
-		@apply bg-gray-900 text-white p-4 rounded-lg overflow-x-auto mb-6;
+		@apply bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-6;
 	}
 
 	code {
 		font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-		@apply text-sm bg-gray-100 py-0.5 px-1.5 rounded;
+		@apply text-sm bg-gray-800 py-0.5 px-1.5 rounded;
 	}
 
 	pre code {
@@ -73,12 +73,12 @@
 	}
 
 	blockquote {
-		@apply border-l-4 border-black pl-4 ml-0 mb-6 italic text-gray-500;
+		@apply border-l-4 border-white pl-4 ml-0 mb-6 italic text-gray-400;
 	}
 
 	/* Lists in prose content */
 	article ul, article ol {
-		@apply mb-6 pl-6;
+		@apply mb-6 pl-6 text-gray-300;
 	}
 
 	article ul {
@@ -91,5 +91,17 @@
 
 	article li {
 		@apply mb-2;
+	}
+
+	article p {
+		@apply text-gray-300;
+	}
+
+	article h2, article h3, article h4 {
+		@apply text-white;
+	}
+
+	article a {
+		@apply text-blue-400 hover:text-blue-300;
 	}
 }
