@@ -1,200 +1,135 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog'))
-	.filter(post => !post.data.draft)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 6);
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<div class="grid grid-cols-[280px_1fr] gap-8 py-16 max-lg:grid-cols-1">
-		<aside class="sticky top-[100px] h-fit max-lg:static max-lg:max-w-sm max-lg:mx-auto">
-			<div class="p-8 border border-gray-200 rounded-xl max-lg:p-6">
-				<h2 class="text-2xl font-semibold mb-2">BitsOf</h2>
-				<p class="text-base font-medium mb-4 text-black">We build data-driven AI solutions to boost revenue and cut costs for SMBs in an AI-driven world.</p>
-				<p class="text-sm text-gray-500 leading-relaxed mb-6">Development services includes: AI Automations, Data Engineering, Data Visualizations, and End-to-End Product Development.</p>
+	<div class="max-w-4xl mx-auto py-20">
+		<!-- Hero -->
+		<section class="mb-24">
+			<h1 class="font-bold mb-6 leading-tight">
+				<span class="text-8xl max-md:text-6xl block">We Build</span>
+				<span class="text-4xl max-md:text-2xl text-gray-300 block">&gt; AI Agents</span>
+				<span class="text-4xl max-md:text-2xl text-gray-300 block">&gt; Automated Workflows</span>
+				<span class="text-4xl max-md:text-2xl text-gray-300 block">&gt; Solutions to Your Problems</span>
+			</h1>
+			<p class="text-xl mb-8 max-w-2xl">
+				<span class="text-white font-bold">New Age. New Problems. New Solutions.</span><br />
+				<span class="text-gray-400">We fix ops, reduce costs, and grow your business. We use AI and develop automations to help your business grow. We want to help. A passion for helping is our middle name. Tell us about your business, and help us, help you improve your business.</span>
+			</p>
+			<a href="https://cal.com/thejeffdo/30min" class="inline-block py-3 px-6 bg-white text-black no-underline rounded-lg font-medium transition-all duration-200 hover:bg-gray-200" target="_blank" rel="noopener noreferrer">Let's Build</a>
+		</section>
 
-				<a href="https://cal.com/thejeffdo/30min" class="block w-full py-3 px-6 bg-black text-white text-center no-underline rounded-lg text-sm font-medium transition-all duration-200 mb-3 hover:bg-gray-800" target="_blank" rel="noopener noreferrer">Book a call</a>
-
-				<a href="#pricing" class="pricing-btn block w-full py-3 px-6 bg-white text-black text-center no-underline border border-gray-200 rounded-lg text-sm font-medium transition-all duration-200 hover:border-black">Starting at $5,000/month</a>
+		<!-- 01/ Offers -->
+		<section class="mb-24">
+			<div class="flex items-baseline gap-4 mb-8">
+				<span class="text-gray-500 text-sm font-medium">01/</span>
+				<h2 class="text-2xl font-bold text-white">Offers</h2>
 			</div>
-		</aside>
-
-		<main class="min-w-0">
-			<section class="mb-12">
-				<div class="flex gap-2 mb-8">
-					<button class="tab px-4 py-2 border border-gray-200 rounded-full bg-white text-sm cursor-pointer transition-all duration-200 hover:border-black active" data-tab="work">Client Work</button>
-					<button class="tab px-4 py-2 border border-gray-200 rounded-full bg-white text-sm cursor-pointer transition-all duration-200 hover:border-black" data-tab="blog">Blog</button>
+			<div class="grid grid-cols-2 gap-6 max-md:grid-cols-1">
+				<div class="p-8 border border-gray-700 rounded-xl">
+					<div class="flex items-baseline gap-3 mb-4">
+						<span class="text-gray-500 text-lg">01</span>
+						<h3 class="text-2xl font-bold text-white">Development Services</h3>
+					</div>
+					<p class="text-gray-400 mb-6">We audit your business, find what's costing you time and money, and build AI solutions to your problems in weeks. We analyze data, create pipelines, handle end to end development, and improve your systems.</p>
+					<a href="https://cal.com/thejeffdo/30min" class="inline-block py-3 px-6 bg-white text-black no-underline rounded-lg font-medium transition-all duration-200 hover:bg-gray-200" target="_blank" rel="noopener noreferrer">Let's Build</a>
 				</div>
-
-				<div class="tab-content" id="work-content">
-					<div class="flex flex-col gap-4">
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">BitsOf Automations</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Automations</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Data Processing</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Analytics</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Tooling</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">We develop custom Business Automations which finds customers, detects anomalies, processes data, produces dashboards and alerts to increase revenue and prevent losses for businesses large and small.</p>
-						</div>
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">Yap (AI Coach)</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">AI</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">App/Web Development</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">AI Coach web and mobile app, focused on increasing clarity and completing tasks faster using cutting edge productivity techniques.</p>
-						</div>
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">Triai (Autonomous AI Agent Platform)</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">AI</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Fintech</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Tooling</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">Autonomous AI Agent Platform with rich text editing to triage financial systems and generate reports.</p>
-						</div>
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">MIA Containers (Large Scale Ecommerce Store)</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Ecommerce</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">App/Web Development</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">Enterprise Ecommerce store dealing with creating American containers for local pickup at hundreds of locations.</p>
-						</div>
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">Yapdo (AI Dashboard System)</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">AI</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Automations</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Analytics</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">Autonomous AI Agent Dashboard system allowing AI agents to dynamically create dashboards for your business and your life, completing tasks on a daily, weekly, and monthly cadence, all in one place.</p>
-						</div>
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">ScrapEverything (Data Scraping Services)</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Data Processing</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Analytics</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Tooling</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">Scraping System to automatically scrape data from various sources to help businesses find customers, close sales, and find actionable insights.</p>
-						</div>
-						<div class="p-5 border border-gray-200 rounded-lg transition-all duration-200 hover:border-black">
-							<h4 class="text-base font-semibold mb-2">GeniePapa (Couponing App)</h4>
-							<div class="flex flex-wrap gap-2 mb-3">
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">App/Web Development</span>
-								<span class="text-xs py-1 px-2 bg-gray-100 rounded text-gray-600">Ecommerce</span>
-							</div>
-							<p class="text-gray-500 text-sm leading-relaxed m-0">Point of sales couponing service allowing companies to create promotional ads to drive customers to visit online and in store.</p>
-						</div>
+				<div class="p-8 border border-gray-700 rounded-xl">
+					<div class="flex items-baseline gap-3 mb-4">
+						<span class="text-gray-500 text-lg">02</span>
+						<h3 class="text-2xl font-bold text-white">Partnerships</h3>
 					</div>
+					<p class="text-gray-400 mb-6">You know your industry, you just don't know how to build it. We are the solution. Performance based model, where if you win, we win. We grow when you grow. You bring the expertise, and we bring in the dev team.</p>
+					<a href="https://cal.com/thejeffdo/30min" class="inline-block py-3 px-6 bg-white text-black no-underline rounded-lg font-medium transition-all duration-200 hover:bg-gray-200" target="_blank" rel="noopener noreferrer">Let's Partner</a>
 				</div>
+			</div>
+		</section>
 
-				<div class="tab-content hidden" id="blog-content">
-					<div class="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4">
-						{posts.length > 0 ? (
-							posts.map(post => (
-								<a href={`/blog/${post.id}`} class="block p-5 border border-gray-200 rounded-lg transition-all duration-200 no-underline text-inherit hover:border-black">
-									<span class="text-xs text-gray-500 block mb-2">{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-									<h4 class="text-base font-semibold mb-1">{post.data.title}</h4>
-									<p class="text-gray-500 text-sm m-0">{post.data.description}</p>
-								</a>
-							))
-						) : (
-							<p class="text-gray-500">No blog posts yet.</p>
-						)}
-					</div>
-				</div>
-			</section>
+		<!-- 02/ Why Automate -->
+		<section class="mb-24">
+			<div class="flex items-baseline gap-4 mb-8">
+				<span class="text-gray-500 text-sm font-medium">02/</span>
+				<h2 class="text-2xl font-bold text-white">Why Automate</h2>
+			</div>
+			<div class="space-y-8 max-w-3xl">
+				<p class="text-xl text-gray-300 leading-relaxed">Times are changing. Your competitors are already automating their workflows, cutting costs, and moving faster than ever. The question isn't whether to automate—it's how quickly you can start.</p>
+				<p class="text-xl text-gray-300 leading-relaxed">If you aren't growing, you're dying. AI automation unlocks scale without proportional cost increases. What used to require a team of 10 can now be handled by systems that work 24/7 with consistent precision.</p>
+				<p class="text-xl text-gray-300 leading-relaxed">Speed. Accuracy. Savings. And making more money. Cut operational costs while increasing output. Free your team to focus on what actually matters—growing the business.</p>
+				<p class="text-xl text-gray-300 leading-relaxed">What would have taken months, can now happen in weeks. You just need the team that knows how.</p>
+			</div>
+		</section>
 
-			<section class="py-12 border-t border-gray-200 mb-12" id="pricing">
-				<h3 class="text-xs text-gray-500 uppercase tracking-wide mb-6">Pricing</h3>
-				<div class="flex flex-col gap-4">
-					<div class="p-6 border border-gray-200 rounded-lg">
-						<h4 class="text-base font-semibold mb-3">Basic</h4>
-						<p class="text-3xl font-semibold mb-3">$5,000<span class="text-sm font-normal text-gray-500">/month</span></p>
-						<ul class="list-none p-0 mt-3">
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">2 updates per week</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Senior Developer + Support (Previously at Playstation, Apple, 50+ projects)</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Private Slack Channel</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">No Contracts, Cancel Anytime</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Software Development (Web/App)</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Tool Development</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Automated Testing</li>
-						</ul>
-					</div>
-					<div class="p-6 border border-gray-200 rounded-lg">
-						<h4 class="text-base font-semibold mb-3">Pro</h4>
-						<p class="text-3xl font-semibold mb-3">$7,500<span class="text-sm font-normal text-gray-500">/month</span></p>
-						<ul class="list-none p-0 mt-3">
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">3 updates per week</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Senior Developer + Support (Previously at Playstation, Apple, 50+ projects)</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Private Slack Channel</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">No Contracts, Cancel Anytime</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Software Development (Web/App/AI)</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">AI Tool Development</li>
-							<li class="text-sm text-gray-600 py-1 pl-5 relative before:content-['✓'] before:absolute before:left-0 before:text-black">Automated Testing</li>
-						</ul>
-					</div>
-					<div class="p-6 border border-gray-200 rounded-lg">
-						<h4 class="text-base font-semibold mb-3">Project Based</h4>
-						<p class="text-3xl font-semibold mb-3">By Feature</p>
-						<p class="text-sm text-gray-500 leading-relaxed mb-0">Priced per feature. Requires discovery phase.</p>
-						<p class="text-xs text-gray-500 mt-3 pt-3 border-t border-gray-200">Starting at $3,000 for discovery, credited towards project work.</p>
-					</div>
-					<div class="p-6 border border-gray-200 rounded-lg">
-						<h4 class="text-base font-semibold mb-3">Performance Based</h4>
-						<p class="text-3xl font-semibold mb-3">By Performance</p>
-						<p class="text-sm text-gray-500 leading-relaxed mb-0">15-30% of verified savings, or 5-15% of revenue lift.</p>
-						<p class="text-xs text-gray-500 mt-3 pt-3 border-t border-gray-200">Starting at $3,000 for discovery, credited towards project work.</p>
-					</div>
-				</div>
-			</section>
+		<!-- 03/ Why Partner -->
+		<section class="mb-24">
+			<div class="flex items-baseline gap-4 mb-8">
+				<span class="text-gray-500 text-sm font-medium">03/</span>
+				<h2 class="text-2xl font-bold text-white">Why Partner</h2>
+			</div>
+			<div class="space-y-8 max-w-3xl">
+				<p class="text-xl text-gray-300 leading-relaxed">Think of us as AI experts in your pocket. We bring new possibilities to your business—experienced engineers who have built systems across 50+ projects, now focused entirely on helping your business thrive.</p>
+				<p class="text-xl text-gray-300 leading-relaxed">We're builders. We build, and solve problems. Not create slide decks.</p>
+				<p class="text-xl text-gray-300 leading-relaxed">Relentless helpfulness is our default mode. We're not satisfied until you're succeeding. When we partner on outcomes, your growth is our growth. We win when you win.</p>
+				<p class="text-xl text-white font-medium">We are the kind of team you want in your corner. It's a win-win.</p>
+			</div>
+		</section>
 
-		</main>
+		<!-- 04/ FAQ -->
+		<section class="mb-24">
+			<div class="flex items-baseline gap-4 mb-12">
+				<span class="text-gray-500 text-sm font-medium">04/</span>
+				<h2 class="text-2xl font-bold text-white">FAQ</h2>
+			</div>
+			<div class="space-y-4">
+				<details class="group border-b border-gray-700 pb-4">
+					<summary class="flex items-baseline gap-4 cursor-pointer list-none">
+						<span class="text-gray-500 text-sm">01/</span>
+						<h3 class="text-xl font-semibold text-white flex-1">How are we different?</h3>
+						<span class="text-gray-500 group-open:rotate-45 transition-transform text-xl">+</span>
+					</summary>
+					<p class="text-gray-400 pl-10 pt-4">We sell outcomes to help you the most. If you need a 1 person, 8 person, or 0 person dev team, we figure it out together. We build quick and fast, whatever is the best fit for you, and the AI future.</p>
+				</details>
+				<details class="group border-b border-gray-700 pb-4">
+					<summary class="flex items-baseline gap-4 cursor-pointer list-none">
+						<span class="text-gray-500 text-sm">02/</span>
+						<h3 class="text-xl font-semibold text-white flex-1">What if we don't know what we need yet?</h3>
+						<span class="text-gray-500 group-open:rotate-45 transition-transform text-xl">+</span>
+					</summary>
+					<p class="text-gray-400 pl-10 pt-4">That's what the call is for. You tell us your business, what you need done the most, and we help build that first. Zero prep needed, give us your problems, we will give you solutions.</p>
+				</details>
+				<details class="group border-b border-gray-700 pb-4">
+					<summary class="flex items-baseline gap-4 cursor-pointer list-none">
+						<span class="text-gray-500 text-sm">03/</span>
+						<h3 class="text-xl font-semibold text-white flex-1">How does pricing work?</h3>
+						<span class="text-gray-500 group-open:rotate-45 transition-transform text-xl">+</span>
+					</summary>
+					<p class="text-gray-400 pl-10 pt-4">Whatever is best for you. Flat fees, partnerships, retainers, fractional ownership. Different scope, different industries, different margins, give us a call, and we will let you know what can work for us.</p>
+				</details>
+				<details class="group border-b border-gray-700 pb-4">
+					<summary class="flex items-baseline gap-4 cursor-pointer list-none">
+						<span class="text-gray-500 text-sm">04/</span>
+						<h3 class="text-xl font-semibold text-white flex-1">How fast are you?</h3>
+						<span class="text-gray-500 group-open:rotate-45 transition-transform text-xl">+</span>
+					</summary>
+					<p class="text-gray-400 pl-10 pt-4">We deliver in weeks, not months. You can see the first value within a week. We will send updates, as work is performed. Full system builds take longer, but can be completed within 1-2 months.</p>
+				</details>
+				<details class="group border-b border-gray-700 pb-4">
+					<summary class="flex items-baseline gap-4 cursor-pointer list-none">
+						<span class="text-gray-500 text-sm">05/</span>
+						<h3 class="text-xl font-semibold text-white flex-1">What kind of businesses do you work with?</h3>
+						<span class="text-gray-500 group-open:rotate-45 transition-transform text-xl">+</span>
+					</summary>
+					<p class="text-gray-400 pl-10 pt-4">We work with companies looking to figure out how to build faster processes, using AI and tech. We are industry agnostic, handling tech for ecommerce, real estate, manufacturing, travel, service businesses, and more. If you have a workflow you want to automate, call us.</p>
+				</details>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="text-center py-16 border-t border-gray-700">
+			<h2 class="text-3xl font-bold mb-4">Ready or Not?</h2>
+			<p class="text-gray-400 mb-8">Let's discuss how we can help your business thrive.</p>
+			<a href="https://cal.com/thejeffdo/30min" class="inline-block py-3 px-6 bg-white text-black no-underline rounded-lg font-medium transition-all duration-200 hover:bg-gray-200" target="_blank" rel="noopener noreferrer">Let's Build</a>
+		</section>
+
 	</div>
 </MainLayout>
-
-<style>
-	.tab.active {
-		@apply bg-black text-white border-black;
-	}
-	.tab-content.hidden {
-		display: none;
-	}
-</style>
-
-<script>
-	// Tab switching
-	const tabs = document.querySelectorAll('.tab');
-	const workContent = document.getElementById('work-content');
-	const blogContent = document.getElementById('blog-content');
-
-	tabs.forEach(tab => {
-		tab.addEventListener('click', () => {
-			tabs.forEach(t => t.classList.remove('active'));
-			tab.classList.add('active');
-
-			const tabName = tab.getAttribute('data-tab');
-			if (tabName === 'work') {
-				workContent?.classList.remove('hidden');
-				blogContent?.classList.add('hidden');
-			} else {
-				workContent?.classList.add('hidden');
-				blogContent?.classList.remove('hidden');
-			}
-		});
-	});
-
-	// Smooth scroll for pricing button
-	document.querySelector('.pricing-btn')?.addEventListener('click', (e) => {
-		e.preventDefault();
-		document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-	});
-</script>
