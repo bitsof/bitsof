@@ -1,6 +1,4 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = 'BitsOf';
-export const SITE_DESCRIPTION = 'BitsOf provides AI-powered solutions to help businesses streamline operations and unlock innovation.';
-export const SITE_URL = 'https://bitsof.vercel.app';
+export const SITE_TITLE = 'BitsOf LLC';
+export const SITE_DESCRIPTION = 'BitsOf LLC is Jeff Do\'s contract studio building client websites, agent harnesses, and apps/tools. Home of YapDo, YapSpan, and YapLearn.';
+export const SITE_URL = 'https://www.bitsof.work';
+export const CONTACT_EMAIL = 'jeffo@jeffo.io';

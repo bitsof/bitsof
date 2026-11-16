@@ -6,7 +6,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bitsof.vercel.app',
+  site: 'https://www.bitsof.work',
   integrations: [
     mdx(),
     sitemap({
@@ -20,7 +20,7 @@ export default defineConfig({
   },
   // Image optimization
   image: {
-    domains: ['bitsof.vercel.app'],
+    domains: ['www.bitsof.work'],
     // Optimize for better performance
     service: {
       // Optimize images uploaded to the project

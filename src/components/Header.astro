@@ -2,12 +2,18 @@
 import Navigation from './Navigation.astro';
 ---
 
-<header class="fixed top-0 left-0 right-0 py-6 px-12 max-md:px-6 bg-black z-[1000]">
-	<div class="flex items-center justify-between">
+<header class="fixed top-0 left-0 right-0 py-4 px-6 md:px-12 bg-black/90 backdrop-blur-sm z-[1000] border-b border-gray-800/50">
+	<div class="max-w-screen-xl mx-auto flex items-center justify-between">
 		<Navigation />
 
-		<!-- Hamburger Menu -->
-		<button id="menu-toggle" class="flex flex-col gap-1.5 p-2 hover:opacity-70 transition-opacity" aria-label="Toggle menu">
+		<nav class="hidden md:flex items-center gap-8">
+			<a href="#products" class="text-gray-400 hover:text-white transition-colors text-sm font-medium">Products</a>
+			<a href="#services" class="text-gray-400 hover:text-white transition-colors text-sm font-medium">Services</a>
+			<a href="/blog" class="text-gray-400 hover:text-white transition-colors text-sm font-medium">Blog</a>
+			<a href="#contact" class="px-4 py-2 bg-white text-black text-sm font-semibold rounded-lg hover:bg-gray-200 transition-colors">Contact</a>
+		</nav>
+
+		<button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2 hover:opacity-70 transition-opacity" aria-label="Toggle menu">
 			<span class="block w-6 h-0.5 bg-white transition-transform duration-300" id="bar1"></span>
 			<span class="block w-6 h-0.5 bg-white transition-opacity duration-300" id="bar2"></span>
 			<span class="block w-6 h-0.5 bg-white transition-transform duration-300" id="bar3"></span>
@@ -15,11 +21,9 @@ import Navigation from './Navigation.astro';
 	</div>
 </header>
 
-<!-- Overlay -->
 <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-[1001] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
-<!-- Sidebar -->
-<div id="menu-sidebar" class="fixed top-0 right-0 h-full w-72 bg-black border-l border-gray-800 z-[1002] transform translate-x-full transition-transform duration-300">
+<div id="menu-sidebar" class="fixed top-0 right-0 h-full w-80 bg-black border-l border-gray-800 z-[1002] transform translate-x-full transition-transform duration-300">
 	<div class="p-6">
 		<button id="menu-close" class="absolute top-6 right-6 p-2 hover:opacity-70 transition-opacity" aria-label="Close menu">
 			<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,21 +31,31 @@ import Navigation from './Navigation.astro';
 			</svg>
 		</button>
 
-		<nav class="mt-16 flex flex-col gap-6">
+		<nav class="mt-16 flex flex-col gap-8">
 			<div>
-				<h3 class="text-gray-500 text-sm font-medium mb-3">What We Do</h3>
-				<div class="flex flex-col gap-3">
-					<a href="/" class="text-lg text-gray-300 hover:text-white transition-colors">&gt; BitsOf</a>
-					<a href="https://yapmastery.com" class="text-lg text-gray-300 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">&gt; YapMastery</a>
-					<a href="https://yapdo.xyz" class="text-lg text-gray-300 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">&gt; YapDo</a>
+				<h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-4">Navigate</h3>
+				<div class="flex flex-col gap-4">
+					<a href="#products" class="text-lg text-gray-300 hover:text-white transition-colors">Products</a>
+					<a href="#services" class="text-lg text-gray-300 hover:text-white transition-colors">Services</a>
+					<a href="/blog" class="text-lg text-gray-300 hover:text-white transition-colors">Blog</a>
+					<a href="#contact" class="text-lg text-gray-300 hover:text-white transition-colors">Contact</a>
 				</div>
 			</div>
 
 			<div class="border-t border-gray-800 pt-6">
-				<h3 class="text-gray-500 text-sm font-medium mb-3">Legal</h3>
-				<div class="flex flex-col gap-3">
-					<a href="/terms" class="text-lg text-gray-300 hover:text-white transition-colors">Terms and Conditions</a>
-					<a href="/privacy" class="text-lg text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+				<h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-4">Products</h3>
+				<div class="flex flex-col gap-4">
+					<a href="https://yapdo.xyz" class="text-lg text-gray-300 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">YapDo →</a>
+					<a href="https://yapspan.com" class="text-lg text-gray-300 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">YapSpan →</a>
+					<a href="https://yaplearn.xyz" class="text-lg text-gray-300 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">YapLearn →</a>
+				</div>
+			</div>
+
+			<div class="border-t border-gray-800 pt-6">
+				<h3 class="text-gray-500 text-xs font-medium uppercase tracking-wider mb-4">Legal</h3>
+				<div class="flex flex-col gap-4">
+					<a href="/terms" class="text-gray-400 hover:text-white transition-colors">Terms</a>
+					<a href="/privacy" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
 				</div>
 			</div>
 		</nav>
@@ -69,4 +83,9 @@ import Navigation from './Navigation.astro';
 	menuToggle?.addEventListener('click', openMenu);
 	menuClose?.addEventListener('click', closeMenu);
 	menuOverlay?.addEventListener('click', closeMenu);
+
+	const menuLinks = menuSidebar?.querySelectorAll('a[href^="#"]');
+	menuLinks?.forEach(link => {
+		link.addEventListener('click', closeMenu);
+	});
 </script>
