@@ -1,42 +1,200 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, CONTACT_EMAIL } from '../consts';
+
+const services = [
+	{
+		title: 'Agent Pipelines',
+		description: 'AI agent harnesses and automation systems that actually ship. We build the scaffolding, orchestration, and reliability layers so your agents can run in production—not just demos.',
+		icon: '⚡',
+		gradient: 'from-violet-500 to-purple-600'
+	},
+	{
+		title: 'Data Pipelines',
+		description: 'Production-grade data engineering at scale. Flink, Spark, Kubernetes—we build the infrastructure that moves and transforms your data reliably, whether you\'re processing gigabytes or petabytes.',
+		icon: '🔄',
+		gradient: 'from-emerald-500 to-teal-600'
+	},
+	{
+		title: 'Visualization Pipelines',
+		description: 'Dashboards and data visualization that surface what matters. We connect your data infrastructure to clear, actionable interfaces your team will actually use.',
+		icon: '📊',
+		gradient: 'from-amber-500 to-orange-600'
+	},
+	{
+		title: 'Frontend & Websites',
+		description: 'Web experiences that help you gain users, drive sales, and deliver value to your customers. Modern, fast, and built to convert visitors into results.',
+		icon: '🌐',
+		gradient: 'from-sky-500 to-blue-600'
+	}
+];
+
+const portfolio = [
+	{
+		name: 'YapDo',
+		url: 'https://yapdo.xyz',
+		description: 'AI-powered task management with voice capture and intelligent prioritization'
+	},
+	{
+		name: 'YapSpan',
+		url: 'https://yapspan.com',
+		description: 'Health analytics platform with personalized insights from published research'
+	},
+	{
+		name: 'YapLearn',
+		url: 'https://yaplearn.xyz',
+		description: 'AI language learning with personalized lesson plans across 12 languages'
+	}
+];
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<div class="max-w-screen-2xl mx-auto pt-8 pb-12">
-		<!-- Hero -->
-		<section class="mb-24">
-			<h1 class="font-bold mb-6 leading-tight">
-				<span class="text-8xl max-md:text-6xl block">We Build</span>
-				<span class="text-4xl max-md:text-2xl text-gray-300 block">&gt; AI Agents</span>
-				<span class="text-4xl max-md:text-2xl text-gray-300 block">&gt; Productivity Tools</span>
-				<span class="text-4xl max-md:text-2xl text-gray-300 block">&gt; Solutions to Your Problems</span>
+	<div class="max-w-screen-xl mx-auto">
+		<section class="min-h-[70vh] flex flex-col justify-center py-16 md:py-24">
+			<div class="mb-6">
+				<span class="inline-block px-4 py-2 text-sm font-medium text-gray-400 border border-gray-700 rounded-full">
+					BitsOf LLC — Contract Engineering
+				</span>
+			</div>
+			<h1 class="text-5xl md:text-7xl font-bold mb-6 leading-[1.1]">
+				<span class="block text-white">Agent, Data &</span>
+				<span class="block bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Visualization Pipelines</span>
 			</h1>
-			<p class="text-xl mb-12 max-w-3xl">
-				<span class="text-white font-bold">New Age. New Problems. New Solutions.</span><br />
-				<span class="text-gray-400">In today's increasingly fractured world, BitsOf builds simple products which help improve how you do things. A passion for helping is our middle name.</span>
+			<p class="text-xl md:text-2xl text-gray-400 max-w-3xl mb-12 leading-relaxed">
+				We build the production infrastructure behind AI agents, data systems, and dashboards. Engineering expertise from Apple and PlayStation, applied to your hardest pipeline problems.
 			</p>
+			<div>
+				<a 
+					href={`mailto:${CONTACT_EMAIL}`}
+					class="inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-lg font-semibold rounded-lg hover:bg-gray-200 transition-colors"
+				>
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+					{CONTACT_EMAIL}
+				</a>
+			</div>
 		</section>
 
-		<!-- What We Do -->
-		<section>
-			<h2 class="text-5xl max-md:text-4xl font-bold text-white mb-8">What We Do</h2>
-			<div class="space-y-6">
+		<section id="services" class="py-20 border-t border-gray-800">
+			<div class="mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">What We Build</h2>
+				<p class="text-lg text-gray-400 max-w-2xl">Three core competencies. One goal: reliable systems that run in production.</p>
+			</div>
+			
+			<div class="grid md:grid-cols-2 gap-6">
+				{services.map((service) => (
+					<div class="p-8 rounded-2xl border border-gray-800 bg-gray-900/50">
+						<div class={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${service.gradient} text-2xl mb-6`}>
+							{service.icon}
+						</div>
+						<h3 class="text-xl font-bold text-white mb-3">{service.title}</h3>
+						<p class="text-gray-400 leading-relaxed">{service.description}</p>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section id="approach" class="py-20 border-t border-gray-800">
+			<div class="mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">How We Work</h2>
+				<p class="text-lg text-gray-400 max-w-2xl">Straightforward engagements. No surprises.</p>
+			</div>
+			
+			<div class="grid md:grid-cols-2 gap-12">
 				<div>
-					<h3 class="text-2xl font-bold mb-2"><a href="/" class="text-white hover:text-gray-300 transition-colors">&gt; BitsOf</a></h3>
-					<p class="text-gray-400 text-lg max-w-3xl">Our company is focused on helping people gain clarity so they can do the right things, at the right times, better, and faster.</p>
+					<div class="flex items-center gap-4 mb-4">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">1</span>
+						<h3 class="text-xl font-semibold text-white">Scope the Problem</h3>
+					</div>
+					<p class="text-gray-400 ml-12">We start with a conversation about what you're trying to build and where you're stuck. No sales pitch—just figuring out if there's a fit.</p>
 				</div>
 				<div>
-					<h3 class="text-2xl font-bold mb-2"><a href="https://yapmastery.com" class="text-white hover:text-gray-300 transition-colors" target="_blank" rel="noopener noreferrer">&gt; YapMastery</a></h3>
-					<p class="text-gray-400 text-lg max-w-3xl">AI Productivity Coach. An outcome-focused program with an AI agent in your corner, helping you get focused, stay focused, and achieve your goals. We help you get more done, faster.</p>
+					<div class="flex items-center gap-4 mb-4">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">2</span>
+						<h3 class="text-xl font-semibold text-white">Define the Work</h3>
+					</div>
+					<p class="text-gray-400 ml-12">Clear deliverables, timeline, and pricing before we start. You know exactly what you're getting and when.</p>
 				</div>
 				<div>
-					<h3 class="text-2xl font-bold mb-2"><a href="https://yapdo.xyz" class="text-white hover:text-gray-300 transition-colors" target="_blank" rel="noopener noreferrer">&gt; YapDo</a></h3>
-					<p class="text-gray-400 text-lg max-w-3xl">Centralized AI Dashboard, malleable, and exactly what you want. Ask for it, connect your data, and have all your AI agents work together.</p>
+					<div class="flex items-center gap-4 mb-4">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">3</span>
+						<h3 class="text-xl font-semibold text-white">Build & Ship</h3>
+					</div>
+					<p class="text-gray-400 ml-12">We do the work. Regular updates, working code, documentation. No black boxes.</p>
+				</div>
+				<div>
+					<div class="flex items-center gap-4 mb-4">
+						<span class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">4</span>
+						<h3 class="text-xl font-semibold text-white">Hand Off</h3>
+					</div>
+					<p class="text-gray-400 ml-12">Your team owns the result. We transfer knowledge, answer questions, and make sure you can maintain what we built.</p>
 				</div>
 			</div>
 		</section>
 
+		<section id="background" class="py-20 border-t border-gray-800">
+			<div class="mb-16">
+				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Background</h2>
+				<p class="text-lg text-gray-400 max-w-2xl">Engineering experience from companies that don't tolerate downtime.</p>
+			</div>
+			
+			<div class="grid md:grid-cols-2 gap-8 mb-16">
+				<div class="p-6 rounded-xl border border-gray-800 bg-gray-900/30">
+					<div class="flex items-center gap-4 mb-4">
+						<div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-xl"></div>
+						<div>
+							<h3 class="font-semibold text-white">Apple</h3>
+							<p class="text-sm text-gray-500">Data & Infrastructure Engineering</p>
+						</div>
+					</div>
+					<p class="text-gray-400 text-sm">Large-scale data pipelines and infrastructure supporting billions of users.</p>
+				</div>
+				<div class="p-6 rounded-xl border border-gray-800 bg-gray-900/30">
+					<div class="flex items-center gap-4 mb-4">
+						<div class="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center text-xl">🎮</div>
+						<div>
+							<h3 class="font-semibold text-white">PlayStation</h3>
+							<p class="text-sm text-gray-500">Platform Engineering</p>
+						</div>
+					</div>
+					<p class="text-gray-400 text-sm">Backend systems and data infrastructure for global gaming platform.</p>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-xl font-semibold text-white mb-6">Built by Us</h3>
+				<div class="grid md:grid-cols-3 gap-4">
+					{portfolio.map((project) => (
+						<a 
+							href={project.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group p-5 rounded-xl border border-gray-800 hover:border-gray-700 transition-colors"
+						>
+							<div class="flex items-center gap-2 mb-2">
+								<h4 class="font-semibold text-white">{project.name}</h4>
+								<svg class="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+							</div>
+							<p class="text-sm text-gray-500">{project.description}</p>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section id="contact" class="py-20 border-t border-gray-800">
+			<div class="max-w-2xl mx-auto text-center">
+				<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Let's Talk</h2>
+				<p class="text-lg text-gray-400 mb-10">
+					Have a pipeline problem? Tell us what you're working on.
+				</p>
+				<a 
+					href={`mailto:${CONTACT_EMAIL}`}
+					class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-lg font-semibold rounded-xl hover:from-violet-600 hover:to-purple-700 transition-all shadow-lg shadow-purple-500/25"
+				>
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+					{CONTACT_EMAIL}
+				</a>
+			</div>
+		</section>
 	</div>
 </MainLayout>
