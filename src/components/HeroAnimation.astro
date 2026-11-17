@@ -1,0 +1,437 @@
+---
+---
+
+<div class="hero-animation-container relative w-full h-[400px] md:h-[500px] rounded-2xl border border-gray-800 overflow-hidden bg-black">
+	<canvas id="hero-canvas" class="w-full h-full"></canvas>
+	<div class="hero-animation-fallback absolute inset-0 flex items-center justify-center bg-gray-900/50 hidden">
+		<p class="text-gray-500 text-sm">Animation paused</p>
+	</div>
+</div>
+
+<script>
+(function() {
+	const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+	if (!canvas) return;
+	
+	const ctx = canvas.getContext('2d');
+	if (!ctx) return;
+
+	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const fallback = document.querySelector('.hero-animation-fallback');
+	
+	if (prefersReducedMotion) {
+		if (fallback) fallback.classList.remove('hidden');
+		canvas.style.display = 'none';
+		return;
+	}
+
+	let width = canvas.offsetWidth;
+	let height = canvas.offsetHeight;
+	let dpr = window.devicePixelRatio || 1;
+	
+	function resize() {
+		width = canvas.offsetWidth;
+		height = canvas.offsetHeight;
+		dpr = window.devicePixelRatio || 1;
+		canvas.width = width * dpr;
+		canvas.height = height * dpr;
+		ctx.scale(dpr, dpr);
+	}
+	resize();
+	window.addEventListener('resize', resize);
+
+	const SCENE_DURATION = 4000;
+	const TRANSITION_DURATION = 800;
+	const TOTAL_CYCLE = SCENE_DURATION * 4;
+	
+	let startTime = performance.now();
+
+	function easeInOutCubic(t: number): number {
+		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+	}
+
+	function drawDashboard(progress: number, opacity: number) {
+		ctx.save();
+		ctx.globalAlpha = opacity;
+		
+		const padding = 40;
+		const chartWidth = (width - padding * 3) / 2;
+		const chartHeight = (height - padding * 3) / 2;
+
+		ctx.strokeStyle = '#333';
+		ctx.lineWidth = 1;
+		ctx.strokeRect(padding, padding, chartWidth, chartHeight);
+		ctx.strokeRect(padding * 2 + chartWidth, padding, chartWidth, chartHeight);
+		ctx.strokeRect(padding, padding * 2 + chartHeight, chartWidth, chartHeight);
+		ctx.strokeRect(padding * 2 + chartWidth, padding * 2 + chartHeight, chartWidth, chartHeight);
+
+		ctx.fillStyle = '#666';
+		ctx.font = '11px monospace';
+		ctx.fillText('Revenue', padding + 10, padding + 20);
+		ctx.fillText('Users', padding * 2 + chartWidth + 10, padding + 20);
+		ctx.fillText('Conversion', padding + 10, padding * 2 + chartHeight + 20);
+		ctx.fillText('Performance', padding * 2 + chartWidth + 10, padding * 2 + chartHeight + 20);
+
+		const barCount = 8;
+		const barWidth = (chartWidth - 40) / barCount - 4;
+		for (let i = 0; i < barCount; i++) {
+			const barProgress = Math.min(1, progress * 2 - i * 0.1);
+			if (barProgress <= 0) continue;
+			const barHeight = (Math.sin(i * 0.8 + progress * 3) * 0.3 + 0.5) * (chartHeight - 50) * easeInOutCubic(barProgress);
+			ctx.fillStyle = '#fff';
+			ctx.fillRect(padding + 20 + i * (barWidth + 4), padding + chartHeight - 20 - barHeight, barWidth, barHeight);
+		}
+
+		ctx.beginPath();
+		ctx.strokeStyle = '#fff';
+		ctx.lineWidth = 2;
+		for (let i = 0; i <= 20; i++) {
+			const x = padding * 2 + chartWidth + 20 + (i / 20) * (chartWidth - 40);
+			const lineProgress = Math.min(1, progress * 1.5 - i * 0.03);
+			if (lineProgress <= 0) continue;
+			const y = padding + chartHeight / 2 + Math.sin(i * 0.5 + progress * 4) * (chartHeight * 0.3) * lineProgress;
+			if (i === 0) ctx.moveTo(x, y);
+			else ctx.lineTo(x, y);
+		}
+		ctx.stroke();
+
+		const kpiValue = Math.floor(progress * 94.7 * 10) / 10;
+		ctx.fillStyle = '#fff';
+		ctx.font = 'bold 32px monospace';
+		ctx.fillText(`${kpiValue}%`, padding + chartWidth / 2 - 40, padding * 2 + chartHeight + chartHeight / 2);
+
+		const donutX = padding * 2 + chartWidth + chartWidth / 2;
+		const donutY = padding * 2 + chartHeight + chartHeight / 2;
+		const donutR = Math.min(chartWidth, chartHeight) / 4;
+		ctx.beginPath();
+		ctx.strokeStyle = '#333';
+		ctx.lineWidth = 12;
+		ctx.arc(donutX, donutY, donutR, 0, Math.PI * 2);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.strokeStyle = '#fff';
+		ctx.arc(donutX, donutY, donutR, -Math.PI / 2, -Math.PI / 2 + progress * Math.PI * 1.6);
+		ctx.stroke();
+
+		ctx.restore();
+	}
+
+	function drawRealEstateAI(progress: number, opacity: number) {
+		ctx.save();
+		ctx.globalAlpha = opacity;
+
+		const mapX = 40;
+		const mapY = 40;
+		const mapW = width * 0.55;
+		const mapH = height - 80;
+		
+		ctx.strokeStyle = '#333';
+		ctx.lineWidth = 1;
+		ctx.strokeRect(mapX, mapY, mapW, mapH);
+
+		ctx.strokeStyle = '#222';
+		for (let i = 0; i < 8; i++) {
+			ctx.beginPath();
+			ctx.moveTo(mapX, mapY + (mapH / 8) * i);
+			ctx.lineTo(mapX + mapW, mapY + (mapH / 8) * i);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(mapX + (mapW / 8) * i, mapY);
+			ctx.lineTo(mapX + (mapW / 8) * i, mapY + mapH);
+			ctx.stroke();
+		}
+
+		const pins = [
+			{ x: 0.2, y: 0.3, delay: 0 },
+			{ x: 0.6, y: 0.2, delay: 0.15 },
+			{ x: 0.4, y: 0.6, delay: 0.3 },
+			{ x: 0.8, y: 0.5, delay: 0.45 },
+			{ x: 0.3, y: 0.8, delay: 0.6 },
+			{ x: 0.7, y: 0.75, delay: 0.75 },
+		];
+
+		pins.forEach((pin, i) => {
+			const pinProgress = Math.max(0, Math.min(1, (progress - pin.delay) * 3));
+			if (pinProgress <= 0) return;
+			
+			const px = mapX + pin.x * mapW;
+			const py = mapY + pin.y * mapH;
+			const scale = easeInOutCubic(pinProgress);
+			
+			ctx.fillStyle = '#fff';
+			ctx.beginPath();
+			ctx.arc(px, py - 8 * scale, 6 * scale, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.moveTo(px - 4 * scale, py - 4 * scale);
+			ctx.lineTo(px, py + 4 * scale);
+			ctx.lineTo(px + 4 * scale, py - 4 * scale);
+			ctx.fill();
+		});
+
+		const panelX = mapX + mapW + 20;
+		const panelY = 40;
+		const panelW = width - panelX - 40;
+		const panelH = height - 80;
+		
+		ctx.strokeStyle = '#333';
+		ctx.strokeRect(panelX, panelY, panelW, panelH);
+
+		ctx.fillStyle = '#666';
+		ctx.font = '10px monospace';
+		ctx.fillText('AI Analysis', panelX + 10, panelY + 20);
+
+		const llmProgress = Math.max(0, progress - 0.3) / 0.7;
+		if (llmProgress > 0) {
+			const lines = [
+				'Analyzing property...',
+				'Location: Prime area',
+				'Score: 87/100',
+				'Comps: $450K-$520K',
+				'Est. value: $485,000',
+				'ROI potential: 12.3%',
+				'Risk: Low',
+				'Recommendation: BUY'
+			];
+			
+			ctx.fillStyle = '#fff';
+			ctx.font = '11px monospace';
+			lines.forEach((line, i) => {
+				const lineProgress = Math.max(0, Math.min(1, llmProgress * 8 - i));
+				if (lineProgress <= 0) return;
+				const chars = Math.floor(line.length * lineProgress);
+				const displayText = line.substring(0, chars);
+				ctx.fillText(displayText, panelX + 10, panelY + 45 + i * 22);
+			});
+
+			if (llmProgress > 0.5) {
+				const cursorY = panelY + 45 + Math.min(7, Math.floor(llmProgress * 8)) * 22;
+				if (Math.floor(performance.now() / 500) % 2 === 0) {
+					ctx.fillRect(panelX + 10 + ctx.measureText(lines[Math.min(7, Math.floor(llmProgress * 8))] || '').width, cursorY - 10, 8, 14);
+				}
+			}
+		}
+
+		ctx.restore();
+	}
+
+	function drawJupyterNotebook(progress: number, opacity: number) {
+		ctx.save();
+		ctx.globalAlpha = opacity;
+
+		const nbX = 60;
+		const nbY = 30;
+		const nbW = width - 120;
+		const nbH = height - 60;
+		
+		ctx.strokeStyle = '#333';
+		ctx.lineWidth = 1;
+		ctx.strokeRect(nbX, nbY, nbW, nbH);
+
+		ctx.fillStyle = '#111';
+		ctx.fillRect(nbX, nbY, nbW, 30);
+		ctx.fillStyle = '#666';
+		ctx.font = '11px monospace';
+		ctx.fillText('security_analysis.ipynb', nbX + 10, nbY + 20);
+
+		const cells = [
+			{ type: 'code', content: ['import pandas as pd', 'from security import Scanner'], height: 60 },
+			{ type: 'code', content: ['scanner = Scanner()', 'results = scanner.analyze()'], height: 60 },
+			{ type: 'output', content: ['Scanning 1,247 endpoints...', 'Found 3 vulnerabilities'], height: 50 },
+			{ type: 'code', content: ['df = pd.DataFrame(results)', 'df.severity.value_counts()'], height: 60 },
+			{ type: 'output', content: ['HIGH: 1', 'MEDIUM: 2', 'LOW: 0'], height: 55 },
+		];
+
+		let cellY = nbY + 40;
+		cells.forEach((cell, i) => {
+			const cellProgress = Math.max(0, Math.min(1, progress * 5 - i * 0.8));
+			if (cellProgress <= 0 || cellY > nbY + nbH - 20) return;
+
+			const isExecuting = cellProgress > 0 && cellProgress < 1;
+			
+			ctx.fillStyle = cell.type === 'output' ? '#0a0a0a' : '#111';
+			ctx.fillRect(nbX + 10, cellY, nbW - 20, cell.height);
+			ctx.strokeStyle = isExecuting ? '#fff' : '#333';
+			ctx.lineWidth = isExecuting ? 2 : 1;
+			ctx.strokeRect(nbX + 10, cellY, nbW - 20, cell.height);
+
+			ctx.fillStyle = isExecuting ? '#fff' : '#444';
+			ctx.font = '10px monospace';
+			ctx.fillText(isExecuting ? '[*]' : `[${i + 1}]`, nbX + 15, cellY + 18);
+
+			ctx.fillStyle = cell.type === 'output' ? '#888' : '#fff';
+			ctx.font = '11px monospace';
+			cell.content.forEach((line, li) => {
+				const lineProgress = Math.min(1, cellProgress * cell.content.length - li);
+				if (lineProgress <= 0) return;
+				const chars = Math.floor(line.length * lineProgress);
+				ctx.fillText(line.substring(0, chars), nbX + 50, cellY + 18 + li * 16);
+			});
+
+			cellY += cell.height + 10;
+		});
+
+		ctx.restore();
+	}
+
+	function drawColdOutreach(progress: number, opacity: number) {
+		ctx.save();
+		ctx.globalAlpha = opacity;
+
+		const listX = 40;
+		const listY = 40;
+		const listW = width * 0.45;
+		const listH = height - 80;
+		
+		ctx.strokeStyle = '#333';
+		ctx.lineWidth = 1;
+		ctx.strokeRect(listX, listY, listW, listH);
+		
+		ctx.fillStyle = '#666';
+		ctx.font = '10px monospace';
+		ctx.fillText('Lead Pipeline', listX + 10, listY + 20);
+
+		const leads = [
+			{ name: 'Sarah Chen', company: 'TechCorp', status: 'enriched' },
+			{ name: 'Mike Ross', company: 'DataInc', status: 'enriched' },
+			{ name: 'Amy Liu', company: 'AILabs', status: 'sending' },
+			{ name: 'John Smith', company: 'CloudSys', status: 'queued' },
+			{ name: 'Lisa Wang', company: 'DevOps.io', status: 'queued' },
+			{ name: 'Tom Brown', company: 'ScaleFast', status: 'new' },
+			{ name: 'Eva Green', company: 'MLStart', status: 'new' },
+			{ name: 'Dan Lee', company: 'AutoFlow', status: 'new' },
+		];
+
+		const scrollOffset = progress * 60;
+		leads.forEach((lead, i) => {
+			const leadY = listY + 35 + i * 35 - scrollOffset;
+			if (leadY < listY + 30 || leadY > listY + listH - 25) return;
+			
+			const leadProgress = Math.max(0, Math.min(1, progress * 8 - i * 0.5));
+			if (leadProgress <= 0) return;
+
+			ctx.fillStyle = '#fff';
+			ctx.font = '12px monospace';
+			ctx.fillText(lead.name, listX + 10, leadY + 5);
+			ctx.fillStyle = '#555';
+			ctx.font = '10px monospace';
+			ctx.fillText(lead.company, listX + 10, leadY + 20);
+
+			let statusColor = '#444';
+			if (lead.status === 'enriched') statusColor = '#888';
+			if (lead.status === 'sending') statusColor = '#fff';
+			ctx.fillStyle = statusColor;
+			ctx.fillText(lead.status.toUpperCase(), listX + listW - 70, leadY + 12);
+		});
+
+		const queueX = listX + listW + 20;
+		const queueY = 40;
+		const queueW = width - queueX - 40;
+		const queueH = (height - 100) / 2;
+
+		ctx.strokeStyle = '#333';
+		ctx.strokeRect(queueX, queueY, queueW, queueH);
+		ctx.fillStyle = '#666';
+		ctx.font = '10px monospace';
+		ctx.fillText('Email Queue', queueX + 10, queueY + 20);
+
+		const sentCount = Math.floor(progress * 47);
+		const queueCount = Math.max(0, 23 - Math.floor(progress * 15));
+		
+		ctx.fillStyle = '#fff';
+		ctx.font = 'bold 28px monospace';
+		ctx.fillText(`${sentCount}`, queueX + queueW / 2 - 25, queueY + queueH / 2 + 5);
+		ctx.fillStyle = '#666';
+		ctx.font = '11px monospace';
+		ctx.fillText('sent', queueX + queueW / 2 + 15, queueY + queueH / 2 + 5);
+
+		const statsY = queueY + queueH + 20;
+		ctx.strokeStyle = '#333';
+		ctx.strokeRect(queueX, statsY, queueW, queueH);
+		ctx.fillStyle = '#666';
+		ctx.font = '10px monospace';
+		ctx.fillText('Stats', queueX + 10, statsY + 20);
+
+		const stats = [
+			{ label: 'Open rate', value: `${Math.floor(progress * 42)}%` },
+			{ label: 'Reply rate', value: `${Math.floor(progress * 18)}%` },
+			{ label: 'In queue', value: `${queueCount}` },
+		];
+		
+		stats.forEach((stat, i) => {
+			ctx.fillStyle = '#888';
+			ctx.font = '11px monospace';
+			ctx.fillText(stat.label, queueX + 10, statsY + 45 + i * 25);
+			ctx.fillStyle = '#fff';
+			ctx.fillText(stat.value, queueX + queueW - 50, statsY + 45 + i * 25);
+		});
+
+		ctx.restore();
+	}
+
+	function draw(timestamp: number) {
+		const elapsed = timestamp - startTime;
+		const cycleTime = elapsed % TOTAL_CYCLE;
+		const sceneIndex = Math.floor(cycleTime / SCENE_DURATION);
+		const sceneTime = cycleTime % SCENE_DURATION;
+		
+		ctx.fillStyle = '#000';
+		ctx.fillRect(0, 0, width, height);
+
+		const progress = Math.min(1, sceneTime / (SCENE_DURATION - TRANSITION_DURATION));
+		let opacity = 1;
+		
+		if (sceneTime > SCENE_DURATION - TRANSITION_DURATION) {
+			opacity = 1 - (sceneTime - (SCENE_DURATION - TRANSITION_DURATION)) / TRANSITION_DURATION;
+		}
+
+		switch (sceneIndex) {
+			case 0: drawDashboard(progress, opacity); break;
+			case 1: drawRealEstateAI(progress, opacity); break;
+			case 2: drawJupyterNotebook(progress, opacity); break;
+			case 3: drawColdOutreach(progress, opacity); break;
+		}
+
+		const nextSceneIndex = (sceneIndex + 1) % 4;
+		if (sceneTime > SCENE_DURATION - TRANSITION_DURATION) {
+			const nextOpacity = (sceneTime - (SCENE_DURATION - TRANSITION_DURATION)) / TRANSITION_DURATION;
+			const nextProgress = 0;
+			switch (nextSceneIndex) {
+				case 0: drawDashboard(nextProgress, nextOpacity); break;
+				case 1: drawRealEstateAI(nextProgress, nextOpacity); break;
+				case 2: drawJupyterNotebook(nextProgress, nextOpacity); break;
+				case 3: drawColdOutreach(nextProgress, nextOpacity); break;
+			}
+		}
+
+		const dotY = height - 20;
+		const dotSpacing = 16;
+		const dotsX = width / 2 - (dotSpacing * 1.5);
+		for (let i = 0; i < 4; i++) {
+			ctx.beginPath();
+			ctx.fillStyle = i === sceneIndex ? '#fff' : '#444';
+			ctx.arc(dotsX + i * dotSpacing, dotY, 3, 0, Math.PI * 2);
+			ctx.fill();
+		}
+
+		requestAnimationFrame(draw);
+	}
+
+	requestAnimationFrame(draw);
+})();
+</script>
+
+<style>
+	.hero-animation-container {
+		contain: strict;
+	}
+	
+	@media (prefers-reduced-motion: reduce) {
+		.hero-animation-container canvas {
+			display: none;
+		}
+		.hero-animation-fallback {
+			display: flex !important;
+		}
+	}
+</style>

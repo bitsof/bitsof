@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import HeroAnimation from '../components/HeroAnimation.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, CONTACT_EMAIL, LINKEDIN_URL } from '../consts';
 
 const services = [
@@ -73,6 +74,10 @@ const portfolio = [
 					LinkedIn
 				</a>
 			</div>
+		</section>
+
+		<section class="pb-20">
+			<HeroAnimation />
 		</section>
 
 		<section id="services" class="py-20 border-t border-gray-800">
